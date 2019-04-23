@@ -1,0 +1,23 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <!--<item name="android:statusBarColor">@color/colorXLightGrey</item>-->
+    </style>
+
+    <style name="TextInsignificantStyle">
+        <item name="android:color">@color/colorLightGrey</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="columnHeadText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/colorGrey</item>
+        <item name="android:gravity">right|center_vertical</item>
+    </style>
+
+</resources>

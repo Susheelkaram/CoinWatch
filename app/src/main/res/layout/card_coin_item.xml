@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_margin="5dp"
+    app:contentPadding="5dp"
+    app:cardCornerRadius="5dp"
+    android:elevation="5dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="4">
+            <ImageView
+                android:id="@+id/imageView_CoinLogo"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_monetization_on_black_24dp"/>
+
+            <TextView
+                android:id="@+id/textView_CoinSymbol"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="BTC"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical|end"
+            android:layout_weight="3">
+            <TextView
+                android:id="@+id/textView_CurrentPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$5,200"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/textView_24HrChangePercent"
+                style="@style/TextInsignificantStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0%" />
+            <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="horizontal">-->
+            <!--<TextView-->
+            <!--android:id="@+id/textView_CoinChangePercent"-->
+            <!--style="@style/TextInsignificantStyle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="1.8%" />-->
+            <!--<TextView-->
+            <!--android:id="@+id/textView_CoinChangeValue"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingStart="5dp"-->
+            <!--android:textSize="14sp"-->
+            <!--android:text="($120)"/>-->
+            <!--</LinearLayout>-->
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="3"
+            android:gravity="center_vertical|end"
+            android:paddingRight="10dp">
+            <TextView
+                android:id="@+id/textView_Holdings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$56,458"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/textView_HoldingsQty"
+                style="@style/TextInsignificantStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1.2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:gravity="center">
+            <android.support.design.button.MaterialButton
+                android:id="@+id/button_AddTransaction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="0dp"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                app:icon="@drawable/ic_add_circle_outline_black_24dp"
+                android:paddingEnd="2dp"
+                android:paddingStart="4dp"
+                app:iconSize="18dp"
+                app:iconTint="@color/colorLightGrey"/>
+            <android.support.design.button.MaterialButton
+                android:id="@+id/button_AddAlert"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="0dp"
+                android:paddingStart="2dp"
+                android:paddingEnd="0dp"
+                app:icon="@drawable/ic_add_alert_black_24dp"
+                app:iconTint="@color/colorLightGrey"
+                app:iconSize="18dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
