@@ -5,42 +5,158 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.CoinDetailActivity">
+    tools:context=".activities.CoinDetailActivity"
+    android:background="@color/colorWhite">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/AppBar"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:gravity="center"
-            android:padding="20dp"
-            android:text="$5,102"
-            android:textSize="26sp" />
+            android:padding="10dp">
+            <TextView
+                android:id="@+id/textView_CoinName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Coin Name"/>
+            <TextView
+                android:id="@+id/textView_CoinCurrentPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$5,102"
+                android:textSize="26sp" />
+            <TextView
+                android:id="@+id/textView_Coin24HChange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2.8%"/>
+        </LinearLayout>
+
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/border"
+        android:padding="1dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                style="@style/StyleHeadingCoinMoreDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rank" />
+
+            <TextView
+                android:id="@+id/textView_CoinRank"
+                style="@style/StyleCoinInfoTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:background="@drawable/border_left">
+
+            <TextView
+                style="@style/StyleHeadingCoinMoreDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Market Cap" />
+
+            <TextView
+                android:id="@+id/textView_CoinMarketCap"
+                style="@style/StyleCoinInfoTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="$17.2M" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:background="@drawable/border_left">
+
+            <TextView
+                style="@style/StyleHeadingCoinMoreDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="24Hr High" />
+
+            <TextView
+                android:id="@+id/textView_24HrHigh"
+                style="@style/StyleCoinInfoTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="$5,200" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:background="@drawable/border_left">
+
+            <TextView
+                style="@style/StyleHeadingCoinMoreDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="24Hr Low" />
+
+            <TextView
+                android:id="@+id/textView_24HrLow"
+                style="@style/StyleCoinInfoTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="$5,020" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+
         <android.support.design.widget.TabLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <android.support.design.widget.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Price Chart"/>
-            <android.support.design.widget.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Coin Info" />
-        </android.support.design.widget.TabLayout>
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewPager_CoinPager"
+            android:id="@+id/tabLayout_CoinDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager_CoinDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>

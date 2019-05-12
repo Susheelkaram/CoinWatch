@@ -70,6 +70,9 @@ public class CoinInfo {
     @Expose
     private String lastUpdated;
 
+
+    // ============= Getters & Setters ==============
+
     public String getId() {
         return id;
     }

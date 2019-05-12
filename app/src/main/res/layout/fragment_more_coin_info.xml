@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".fragments.MoreCoinInfoFragment">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1,2">
+
+        <TableRow style="@style/StyleRowMoreInfo">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_column="1"
+                android:padding="5dp"
+                android:text="About Coin"
+                android:textSize="10dp" />
+        </TableRow>
+
+        <TableRow style="@style/StyleRowMoreInfo">
+
+            <TextView
+                style="@style/StyleMoreInfoCoinLeft"
+                android:layout_gravity="center_vertical"
+                android:layout_column="1"
+                android:text="Website" />
+
+            <TextView
+                style="@style/StyleMoreInfoCoinRight"
+                android:layout_column="2"
+                android:text="Website.com" />
+
+        </TableRow>
+
+        <TableRow style="@style/StyleRowMoreInfo">
+
+            <TextView
+                style="@style/StyleMoreInfoCoinLeft"
+                android:layout_column="1"
+                android:text="Forum" />
+
+            <TextView
+                style="@style/StyleMoreInfoCoinRight"
+                android:layout_column="2"
+                android:text="forum.com" />
+
+        </TableRow>
+
+        <TableRow style="@style/StyleRowMoreInfo">
+
+            <TextView
+                style="@style/StyleMoreInfoCoinLeft"
+                android:layout_column="1"
+                android:text="Twitter" />
+
+            <TextView
+                style="@style/StyleMoreInfoCoinRight"
+                android:layout_column="2"
+                android:text="twitter.com" />
+
+        </TableRow>
+
+        <TableRow style="@style/StyleRowMoreInfo">
+
+            <TextView
+                style="@style/StyleMoreInfoCoinLeft"
+                android:layout_column="1"
+                android:text="Facebook" />
+
+            <TextView
+                style="@style/StyleMoreInfoCoinRight"
+                android:layout_column="2"
+                android:text="facebook.com" />
+
+        </TableRow>
+    </TableLayout>
+</FrameLayout>

@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.digicular.coinwatch.R;
 
-public class PortfoliosActivity extends AppCompatActivity {
+public class PortfolioListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
