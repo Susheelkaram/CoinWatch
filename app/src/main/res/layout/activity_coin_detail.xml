@@ -31,13 +31,13 @@
                 android:id="@+id/textView_CoinCurrentPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$5,102"
+                android:text="$0"
                 android:textSize="26sp" />
             <TextView
                 android:id="@+id/textView_Coin24HChange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2.8%"/>
+                android:text="0.0%"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -66,7 +66,7 @@
                 style="@style/StyleCoinInfoTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1" />
+                android:text="0" />
 
         </LinearLayout>
 
@@ -89,7 +89,7 @@
                 style="@style/StyleCoinInfoTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="$17.2M" />
+                android:text="$0M" />
 
         </LinearLayout>
 
@@ -112,7 +112,7 @@
                 style="@style/StyleCoinInfoTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="$5,200" />
+                android:text="$0" />
 
         </LinearLayout>
 
@@ -135,7 +135,7 @@
                 style="@style/StyleCoinInfoTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="$5,020" />
+                android:text="$0" />
 
         </LinearLayout>
 

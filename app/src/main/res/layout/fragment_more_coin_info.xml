@@ -5,21 +5,21 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
     tools:context=".fragments.MoreCoinInfoFragment">
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stretchColumns="1,2">
+        android:stretchColumns="*"
+        android:shrinkColumns="2">
 
-        <TableRow style="@style/StyleRowMoreInfo">
+        <TableRow style="@style/StyleRowMoreInfo"
+            android:layout_width="0dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_column="1"
-                android:padding="5dp"
-                android:text="About Coin"
-                android:textSize="10dp" />
+
         </TableRow>
+
 
         <TableRow style="@style/StyleRowMoreInfo">
 
@@ -27,9 +27,10 @@
                 style="@style/StyleMoreInfoCoinLeft"
                 android:layout_gravity="center_vertical"
                 android:layout_column="1"
-                android:text="Website" />
+                android:text="Official Website" />
 
             <TextView
+                android:id="@+id/textView_WebsiteLink"
                 style="@style/StyleMoreInfoCoinRight"
                 android:layout_column="2"
                 android:text="Website.com" />
@@ -44,6 +45,22 @@
                 android:text="Forum" />
 
             <TextView
+                android:id="@+id/textView_ForumLink"
+                style="@style/StyleMoreInfoCoinRight"
+                android:layout_column="2"
+                android:text="forum.com" />
+
+        </TableRow>
+
+        <TableRow style="@style/StyleRowMoreInfo">
+
+            <TextView
+                style="@style/StyleMoreInfoCoinLeft"
+                android:layout_column="1"
+                android:text="BlockChainLinks" />
+
+            <TextView
+                android:id="@+id/textView_BlockChainLinks"
                 style="@style/StyleMoreInfoCoinRight"
                 android:layout_column="2"
                 android:text="forum.com" />
@@ -58,6 +75,7 @@
                 android:text="Twitter" />
 
             <TextView
+                android:id="@+id/textView_TwitterLink"
                 style="@style/StyleMoreInfoCoinRight"
                 android:layout_column="2"
                 android:text="twitter.com" />
@@ -72,10 +90,43 @@
                 android:text="Facebook" />
 
             <TextView
+                android:id="@+id/textView_FBLink"
                 style="@style/StyleMoreInfoCoinRight"
                 android:layout_column="2"
                 android:text="facebook.com" />
 
         </TableRow>
+
+        <TableRow style="@style/StyleRowMoreInfo">
+
+            <TextView
+                style="@style/StyleMoreInfoCoinLeft"
+                android:layout_column="1"
+                android:text="Subreddit" />
+
+            <TextView
+                android:id="@+id/textView_RedditLink"
+                style="@style/StyleMoreInfoCoinRight"
+                android:layout_column="2"
+                android:text="Reddit.com" />
+
+        </TableRow>
+        <TableRow style="@style/StyleRowMoreInfo">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_column="1"
+                android:padding="5dp"
+                android:text="About Coin"
+                android:textSize="10dp" />
+            <TextView
+                android:id="@+id/textView_Description"
+                android:layout_width="380dp"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:padding="5dp"
+                android:text="Ethereum is the pioneer for blockchain based smart contracts. Smart contract is essentially a computer code that runs exactly as programmed without any possibility of downtime, censorship, fraud or third-party interference. It can facilitate the exchange of money, content, property, shares, or anything of value. When running on the blockchain a smart contract becomes like a self-operating computer program that automatically executes when specific conditions are met.Ethereum allows programmers to run complete-turing smart contracts that is capable of any customizations. Rather than giving a set of limited operations, Ethereum allows developers to have complete control over customization of their smart contract, giving developers the power to build unique and innovative applications."
+                android:textSize="14dp" />
+        </TableRow>
     </TableLayout>
+</ScrollView>
 </FrameLayout>

@@ -1,6 +1,7 @@
 package com.digicular.coinwatch.activities;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -14,11 +15,18 @@ import com.digicular.coinwatch.R;
 import com.digicular.coinwatch.adapters.CoinInfoPagerAdapter;
 import com.digicular.coinwatch.controller.CoinApi;
 import com.digicular.coinwatch.model.CoinInfoDetailed;
+import com.digicular.coinwatch.model.Links;
 import com.digicular.coinwatch.model.MarketData;
 import com.digicular.coinwatch.utils.Contract;
 import com.digicular.coinwatch.utils.Utils;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Currency;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +50,7 @@ public class CoinDetailActivity extends AppCompatActivity {
     String coinId = "ethereum";
     String currency = "usd";
     String currencySymbol = "$";
+    List<Bundle> fragBundles = new ArrayList<Bundle>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +70,6 @@ public class CoinDetailActivity extends AppCompatActivity {
         tvHigh24H = (TextView) findViewById(R.id.textView_24HrHigh);
 
         setSupportActionBar(appBar);
-
-        CoinInfoPagerAdapter coinInfoPagerAdapter =
-                new CoinInfoPagerAdapter(this, getSupportFragmentManager());
-
-        viewPagerCoinDetail.setAdapter(coinInfoPagerAdapter);
-
-        tabLayoutCoinDetail.setupWithViewPager(viewPagerCoinDetail);
 
         Intent intent = getIntent();
         coinId = intent.getStringExtra("coinId");
@@ -94,24 +96,7 @@ public class CoinDetailActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Request Success", Toast.LENGTH_SHORT).show();
 
                     CoinInfoDetailed coinDetails = response.body();
-                    MarketData marketData = coinDetails.getMarketData();
-
-                    String coinName = coinDetails.getName();
-                    String coinSymbol = coinDetails.getSymbol();
-                    String currentPrice = Double.toString(marketData.getCurrentPrice(currency));
-                    String changePercent24H = Double.toString(marketData.getChangePercentage24H());
-                    String rank = Integer.toString(coinDetails.getMarketCapRank());
-                    String marketCap = (marketData.getMarketCap(currency)).toString();
-                    String high24H = Double.toString(marketData.getHigh24H(currency));
-                    String low24H = Double.toString(marketData.getLow24H(currency));
-
-                    tvCoinName.setText(coinName + " (" + coinSymbol.toUpperCase() + ")");
-                    tvCoinRank.setText(rank);
-                    tvCoinCurrentPrice.setText(currencySymbol + currentPrice);
-                    tvCoinMarketCap.setText(marketCap);
-                    tvChangePercent24H.setText(changePercent24H);
-                    tvLow24H.setText(low24H);
-                    tvHigh24H.setText(high24H);
+                    bindData(coinDetails);
                 }
             }
 
@@ -120,6 +105,43 @@ public class CoinDetailActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Request Failed", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void bindData(CoinInfoDetailed coinDetails){
+        MarketData marketData = coinDetails.getMarketData();
+
+        String coinName = coinDetails.getName();
+        String coinSymbol = coinDetails.getSymbol();
+        String currentPrice = Double.toString(marketData.getCurrentPrice(currency));
+        String changePercent24H = Double.toString(marketData.getChangePercentage24H());
+        String rank = Integer.toString(coinDetails.getMarketCapRank());
+        String marketCap = (marketData.getMarketCap(currency)).toString();
+        String high24H = currencySymbol + Double.toString(marketData.getHigh24H(currency));
+        String low24H = currencySymbol + Double.toString(marketData.getLow24H(currency));
+
+        String coinDescription = coinDetails.getDescription();
+        Links links = coinDetails.getLinks();
+
+        tvCoinName.setText(coinName + " (" + coinSymbol.toUpperCase() + ")");
+        tvCoinRank.setText(rank);
+        tvCoinCurrentPrice.setText(currencySymbol + currentPrice);
+        tvCoinMarketCap.setText(marketCap);
+        tvChangePercent24H.setText(changePercent24H);
+        tvLow24H.setText(low24H);
+        tvHigh24H.setText(high24H);
+
+        // Fragments
+        Bundle bundleChart = new Bundle();
+        Bundle bundleMoreInfo = new Bundle();
+        bundleMoreInfo.putString(Contract.MOREINFO_DESCRIPTION, coinDescription);
+        bundleMoreInfo.putParcelable(Contract.MOREINFO_LINKS, links);
+        fragBundles.add(bundleChart);
+        fragBundles.add(bundleMoreInfo);
+
+        CoinInfoPagerAdapter coinInfoPagerAdapter = new CoinInfoPagerAdapter(this, fragBundles, getSupportFragmentManager());
+
+        viewPagerCoinDetail.setAdapter(coinInfoPagerAdapter);
+        tabLayoutCoinDetail.setupWithViewPager(viewPagerCoinDetail);
     }
 
 }

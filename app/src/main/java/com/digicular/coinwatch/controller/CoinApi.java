@@ -16,10 +16,13 @@ import retrofit2.http.Query;
  * Website - SusheelKaram.com
  */
 public interface CoinApi {
+
+    // Bulk Coin prices
     @GET("coins/markets")
     Call<ArrayList<CoinInfo>> getListCoinsInfo(@Query("vs_currency") String currency,
                                 @Query("ids") String coinIds);
 
+    // Individual Coin detailed info
     @GET("coins/{id}?localization=false&tickers=false&community_data=false&developer_data=false")
     Call<CoinInfoDetailed> getDetailedCoinInfo(@Path("id") String coinId);
 }
