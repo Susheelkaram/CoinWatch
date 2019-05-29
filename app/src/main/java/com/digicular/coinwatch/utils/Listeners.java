@@ -1,8 +1,6 @@
 package com.digicular.coinwatch.utils;
 
-import android.support.v4.widget.SwipeRefreshLayout;
-
-import com.digicular.coinwatch.MainActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 /**
  * Created by AsusPC

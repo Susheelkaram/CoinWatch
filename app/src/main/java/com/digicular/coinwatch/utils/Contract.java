@@ -10,6 +10,8 @@ public class Contract {
 
 
     // Fragment: Coin More info
+    public static final String FB_BASEURL = "https://facebook.com/";
+    public static final String TWITTER_BASEURL = "https://twitter.com/";
     public static final String MOREINFO_LINKS = "coinLinks";
     public static final String MOREINFO_DESCRIPTION = "coinDescription";
 

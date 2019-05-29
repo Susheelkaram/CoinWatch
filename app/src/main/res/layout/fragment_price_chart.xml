@@ -19,42 +19,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.design.button.MaterialButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_24HrsChart"
                     style="@style/StyleDaysButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="24H" />
 
-                <android.support.design.button.MaterialButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_7DaysChart"
                     style="@style/StyleDaysButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="7D" />
 
-                <android.support.design.button.MaterialButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_14DaysChart"
                     style="@style/StyleDaysButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="14D" />
 
-                <android.support.design.button.MaterialButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_30DaysChart"
                     style="@style/StyleDaysButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="30D" />
 
-                <android.support.design.button.MaterialButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_60DaysChart"
                     style="@style/StyleDaysButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="60D" />
 
-                <android.support.design.button.MaterialButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_90DaysChart"
                     style="@style/StyleDaysButton"
                     android:layout_width="wrap_content"

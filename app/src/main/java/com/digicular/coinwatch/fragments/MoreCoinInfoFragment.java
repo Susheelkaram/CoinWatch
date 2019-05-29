@@ -1,13 +1,10 @@
 package com.digicular.coinwatch.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,24 +14,27 @@ import com.digicular.coinwatch.R;
 import com.digicular.coinwatch.model.Links;
 import com.digicular.coinwatch.utils.Contract;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class MoreCoinInfoFragment extends Fragment {
 
-//    @BindView(R.id.textView_Description) TextView tvCoinDescription;
-//    @BindView(R.id.textView_TwitterLink) TextView tvCoinTwitterLink;
-//    @BindView(R.id.textView_FBLink) TextView tvCoinFBLink;
-//    @BindView(R.id.textView_ForumLink) TextView tvCoinForumLink;
-//    @BindView(R.id.textView_WebsiteLink) TextView tvCoinWebsite;
-//    @BindView(R.id.textView_RedditLink) TextView tvCoinSubredditLink;
+    @BindView(R.id.textView_Description) TextView tvDescription;
+    @BindView(R.id.textView_TwitterLink) TextView tvTwitterLink;
+    @BindView(R.id.textView_FBLink) TextView tvFBLink;
+    @BindView(R.id.textView_ForumLink) TextView tvForumLink;
+    @BindView(R.id.textView_WebsiteLink) TextView tvWebsiteLink;
+    @BindView(R.id.textView_RedditLink) TextView tvRedditLink;
+    @BindView(R.id.textView_BlockChainLinks) TextView tvBlockChainLinks;
 
-    private TextView tvDescription;
-    private TextView tvWebsiteLink;
-    private TextView tvForumLink;
-    private TextView tvTwitterLink;
-    private TextView tvFBLink;
-    private TextView tvRedditLink;
-    private TextView tvBlockChainLinks;
+//    private TextView tvDescription;
+//    private TextView tvWebsiteLink;
+//    private TextView tvForumLink;
+//    private TextView tvTwitterLink;
+//    private TextView tvFBLink;
+//    private TextView tvRedditLink;
+//    private TextView tvBlockChainLinks;
 
     private String coinDescription;
     private Links links;
@@ -62,22 +62,23 @@ public class MoreCoinInfoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // View Binding ButterKnife
-//        ButterKnife.bind(this, view);
-        tvDescription = (TextView) view.findViewById(R.id.textView_Description);
-        tvWebsiteLink = (TextView) view.findViewById(R.id.textView_WebsiteLink);
-        tvForumLink = (TextView) view.findViewById(R.id.textView_ForumLink);
-        tvTwitterLink = (TextView) view.findViewById(R.id.textView_TwitterLink);
-        tvFBLink = (TextView) view.findViewById(R.id.textView_FBLink);
-        tvRedditLink = (TextView) view.findViewById(R.id.textView_RedditLink);
-        tvBlockChainLinks = (TextView) view.findViewById(R.id.textView_BlockChainLinks);
+        ButterKnife.bind(this, view);
+
+//        tvDescription = (TextView) view.findViewById(R.id.textView_Description);
+//        tvWebsiteLink = (TextView) view.findViewById(R.id.textView_WebsiteLink);
+//        tvForumLink = (TextView) view.findViewById(R.id.textView_ForumLink);
+//        tvTwitterLink = (TextView) view.findViewById(R.id.textView_TwitterLink);
+//        tvFBLink = (TextView) view.findViewById(R.id.textView_FBLink);
+//        tvRedditLink = (TextView) view.findViewById(R.id.textView_RedditLink);
+//        tvBlockChainLinks = (TextView) view.findViewById(R.id.textView_BlockChainLinks);
 
         bindValues(links, coinDescription);
     }
 
     public void bindValues(Links links, String coinDescription){
         String websiteLink = links.getHomepage();
-        String twitterLink = links.getTwitterUserName();
-        String fbLink = links.getFacebookUserName();
+        String twitterLink = Contract.TWITTER_BASEURL + links.getTwitterUserName();
+        String fbLink = Contract.FB_BASEURL + links.getFacebookUserName();
         String forumLink = links.getForumUrl();
         String blockChainLinks = links.getBlockChainSitesAsString();
         String subredditLink = links.getSubredditUrl();
