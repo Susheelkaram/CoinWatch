@@ -13,8 +13,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class Utils {
 
+    // Fetches Retrofit instance with a Cache Support of upto 20MB
     public static Retrofit getRetrofitWithCache(Context context, String baseUrl){
-        long cacheSize = 10 * 1024 * 1024; // 10MB
+        long cacheSize = 20 * 1024 * 1024;
 
         Cache cache = new Cache(context.getCacheDir(), cacheSize);
 
@@ -31,7 +32,4 @@ public class Utils {
         return retrofit;
     }
 
-    public static Double formatNumber(Double num){
-        return 0.0;
-    }
 }

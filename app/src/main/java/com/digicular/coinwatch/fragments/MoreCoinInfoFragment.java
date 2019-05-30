@@ -77,8 +77,8 @@ public class MoreCoinInfoFragment extends Fragment {
 
     public void bindValues(Links links, String coinDescription){
         String websiteLink = links.getHomepage();
-        String twitterLink = Contract.TWITTER_BASEURL + links.getTwitterUserName();
-        String fbLink = Contract.FB_BASEURL + links.getFacebookUserName();
+        String twitterLink = Contract.MOREINFO_TWITTER_BASEURL + links.getTwitterUserName();
+        String fbLink = Contract.MOREINFO_FB_BASEURL + links.getFacebookUserName();
         String forumLink = links.getForumUrl();
         String blockChainLinks = links.getBlockChainSitesAsString();
         String subredditLink = links.getSubredditUrl();

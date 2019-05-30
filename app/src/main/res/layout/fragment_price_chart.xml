@@ -9,6 +9,11 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,14 +67,15 @@
                     android:text="90D" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:background="@drawable/border">
-
-            </LinearLayout>
-
         </LinearLayout>
 
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart_Price"
+            android:layout_width="match_parent"
+            android:layout_height="270dp"
+            android:layout_weight="1">
+
+        </com.github.mikephil.charting.charts.LineChart>
+        </LinearLayout>
     </ScrollView>
 </FrameLayout>

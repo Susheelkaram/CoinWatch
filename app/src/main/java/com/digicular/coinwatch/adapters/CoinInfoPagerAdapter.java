@@ -33,7 +33,7 @@ public class CoinInfoPagerAdapter extends FragmentPagerAdapter {
         switch(i){
             case 0:
                 PriceChartFragment priceChartFragment = new PriceChartFragment();
-//                priceChartFragment.setArguments(fragmentBundles.get(i));
+                priceChartFragment.setArguments(fragmentBundles.get(i));
                 return priceChartFragment;
             case 1:
                 MoreCoinInfoFragment moreCoinInfoFragment = new MoreCoinInfoFragment();

@@ -2,6 +2,7 @@ package com.digicular.coinwatch.controller;
 
 import com.digicular.coinwatch.model.CoinInfo;
 import com.digicular.coinwatch.model.CoinInfoDetailed;
+import com.digicular.coinwatch.model.MarketChart;
 
 import java.util.ArrayList;
 
@@ -25,4 +26,8 @@ public interface CoinApi {
     // Individual Coin detailed info
     @GET("coins/{id}?localization=false&tickers=false&community_data=false&developer_data=false")
     Call<CoinInfoDetailed> getDetailedCoinInfo(@Path("id") String coinId);
+
+    // Coin Market Chart
+    @GET("coins/{id}/market_chart")
+    Call<MarketChart> getMarketChart(@Path("id") String coinId, @Query("days") int days, @Query("vs_currency") String currency);
 }

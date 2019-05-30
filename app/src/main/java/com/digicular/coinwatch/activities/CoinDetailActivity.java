@@ -87,7 +87,7 @@ public class CoinDetailActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Request cannot be processed", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Request Success", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Request Success", Toast.LENGTH_SHORT).show();
 
                     CoinInfoDetailed coinDetails = response.body();
                     bindData(coinDetails);
@@ -126,6 +126,8 @@ public class CoinDetailActivity extends AppCompatActivity {
 
         // Fragments
         Bundle bundleChart = new Bundle();
+        bundleChart.putString(Contract.CHART_COINID, coinId);
+
         Bundle bundleMoreInfo = new Bundle();
         bundleMoreInfo.putString(Contract.MOREINFO_DESCRIPTION, coinDescription);
         bundleMoreInfo.putParcelable(Contract.MOREINFO_LINKS, links);

@@ -24,6 +24,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+/**
+ * Created by Susheel Kumar Karam
+ * Website - SusheelKaram.com
+ */
+
 public class MainActivity extends AppCompatActivity {
     Toolbar appBar;
     RecyclerView rv_CoinsInfoList;
@@ -91,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Request cannot be processed", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Log.d("SUCCESS", response.raw().request().url().toString());
                     coinInfoList= response.body();
                     Toast.makeText(getApplicationContext(), "Success " + coinInfoList.get(0).getCurrentPrice(), Toast.LENGTH_SHORT).show();
                     coinsListAdapter = new CoinsListAdapter(MainActivity.this, coinInfoList);
