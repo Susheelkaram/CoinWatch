@@ -8,11 +8,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.digicular.coinwatch.R;
 import com.digicular.coinwatch.activities.CoinDetailActivity;
+import com.digicular.coinwatch.activities.PriceAlertListActivity;
 import com.digicular.coinwatch.model.CoinInfo;
 import com.squareup.picasso.Picasso;
 
@@ -41,6 +43,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.Coin
         public TextView tv_CurrentPrice;
         public TextView tv_24HrChangePercent;
         public CardView cv_CoinCard;
+        public Button button_AddAlert;
 
         public CoinViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -49,8 +52,21 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.Coin
             tv_CurrentPrice = itemView.findViewById(R.id.textView_CurrentPrice);
             tv_24HrChangePercent = itemView.findViewById(R.id.textView_24HrChangePercent);
             cv_CoinCard = itemView.findViewById(R.id.card_CoinCard);
+            button_AddAlert = itemView.findViewById(R.id.button_AddAlert);
+
+            // Launching Alerts activity
+
+            button_AddAlert.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, PriceAlertListActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
+
         }
     }
+
     @NonNull
     @Override
     public CoinViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

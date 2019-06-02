@@ -83,6 +83,7 @@ public class Links implements Parcelable {
         out.writeString(subredditUrl);
     }
 
+    @SuppressWarnings("unchecked")
     private Links(Parcel in){
         homepage = in.readArrayList(null);
         blockChainSites = in.readArrayList(null);

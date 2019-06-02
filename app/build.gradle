@@ -5,7 +5,7 @@ android {
 
     defaultConfig {
         applicationId "com.digicular.coinwatch"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -40,8 +40,12 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     implementation 'com.jakewharton:butterknife:10.1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'android.arch.work:work-runtime:1.0.1'
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
 }
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
+    maven { url 'https://maven.google.com' }
 }

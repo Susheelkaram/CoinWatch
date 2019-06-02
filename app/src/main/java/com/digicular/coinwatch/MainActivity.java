@@ -6,18 +6,25 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.work.Constraints;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.digicular.coinwatch.adapters.CoinsListAdapter;
+import com.digicular.coinwatch.alerts.PriceAlertWorker;
 import com.digicular.coinwatch.controller.CoinApi;
 import com.digicular.coinwatch.model.CoinInfo;
 import com.digicular.coinwatch.utils.Contract;
 import com.digicular.coinwatch.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView rv_CoinsInfoList;
     SwipeRefreshLayout swipeRefreshLayout;
     ProgressBar pbLoading;
+
 
     CoinsListAdapter coinsListAdapter;
     ArrayList<CoinInfo> coinInfoList;
@@ -65,23 +73,25 @@ public class MainActivity extends AppCompatActivity {
                 getCoinsInfo(CURRENCY, COIN_IDS);
             }
         });
+
+
+
+        // ----------------------------
+        // WorkManager
+        // ----------------------------
+
+        WorkManager workManager = WorkManager.getInstance();
+
+        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(PriceAlertWorker.class)
+                    .setInitialDelay(5, TimeUnit.SECONDS)
+                    .build();
+
+        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(PriceAlertWorker.class, 15, TimeUnit.MINUTES).build();
+        workManager.enqueue(oneTimeWorkRequest);
+
     }
 
     public void getCoinsInfo(String currency, String coinIds){
-
-//        int cacheSize = 10 * 1024 * 1024;
-//
-//        Cache cache = new Cache(getCacheDir(), cacheSize);
-//
-//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-//                .cache(cache)
-//                .build();
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(Contract.BASE_URL)
-//                .client(okHttpClient)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
 
         Retrofit retrofit = Utils.getRetrofitWithCache(this, Contract.BASE_URL);
 
@@ -114,6 +124,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
 }
