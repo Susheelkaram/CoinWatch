@@ -17,6 +17,9 @@ public class PriceAlert {
     @ColumnInfo(name = DBContract.ALERTS_COL_COINID)
     private String coinId;
 
+    @ColumnInfo(name = DBContract.ALERTS_COL_COINSYMBOL)
+    private String coinSymbol;
+
     @ColumnInfo(name = DBContract.ALERTS_COL_CONDITION)
     private String condition;
 
@@ -29,7 +32,9 @@ public class PriceAlert {
     @ColumnInfo(name = DBContract.ALERTS_COL_ISENABLED)
     private boolean isEnabled;
 
-
+    @ColumnInfo(name = DBContract.ALERTS_COL_TIMEMILLIS)
+    //Epoch time in Milli seconds
+    private Long timeStamp;
 
 
     // Getter-setter
@@ -80,5 +85,21 @@ public class PriceAlert {
 
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
+    }
+
+    public Long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Long timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public String getCoinSymbol() {
+        return coinSymbol;
+    }
+
+    public void setCoinSymbol(String coinSymbol) {
+        this.coinSymbol = coinSymbol;
     }
 }

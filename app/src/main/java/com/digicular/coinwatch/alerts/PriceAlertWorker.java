@@ -78,12 +78,12 @@ public class PriceAlertWorker extends Worker {
 
 
 
-        // New Work Request
-        WorkManager workManager = WorkManager.getInstance();
-        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(PriceAlertWorker.class)
-                .setInitialDelay(5, TimeUnit.MINUTES)
-                .build();
-        workManager.enqueue(oneTimeWorkRequest);
+//        // New Work Request
+//        WorkManager workManager = WorkManager.getInstance();
+//        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(PriceAlertWorker.class)
+//                .setInitialDelay(5, TimeUnit.MINUTES)
+//                .build();
+//        workManager.enqueue(oneTimeWorkRequest);
 
         return Result.success();
     }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.digicular.coinwatch.R;
 import com.digicular.coinwatch.database.PriceAlert;
+import com.digicular.coinwatch.database.PriceAlertRepository;
 
 import java.util.List;
 
@@ -29,10 +31,12 @@ public class AlertsListAdapter extends RecyclerView.Adapter<AlertsListAdapter.Al
 
     private Context mContext;
     private List<PriceAlert> mPriceAlertList;
+    private PriceAlertRepository mPriceAlertRepository;
 
     public AlertsListAdapter(Context context, List<PriceAlert> priceAlertList) {
         mContext = context;
         mPriceAlertList = priceAlertList;
+        mPriceAlertRepository = new PriceAlertRepository(mContext);
     }
 
     @NonNull
@@ -44,25 +48,33 @@ public class AlertsListAdapter extends RecyclerView.Adapter<AlertsListAdapter.Al
 
     @Override
     public void onBindViewHolder(@NonNull AlertViewHolder holder, int position) {
-        PriceAlert alert = mPriceAlertList.get(position);
+        PriceAlert mAlert = mPriceAlertList.get(position);
 
-        String coinId = alert.getCoinId();
-        String condition = alert.getCondition();
-        Double targetValue = alert.getTargetValue();
-        boolean isRepeatEnabled = alert.isRepeatEnabled();
-        boolean isEnabled = alert.isEnabled();
+        String coinId = mAlert.getCoinId();
+        String condition = mAlert.getCondition();
+        Double targetValue = mAlert.getTargetValue();
+        boolean isRepeatEnabled = mAlert.isRepeatEnabled();
+        boolean isEnabled = mAlert.isEnabled();
 
         holder.textAlertCoinId.setText(coinId);
-        holder.textAlertCondition.setText(condition);
+        holder.textAlertCondition.setText(condition + " " + targetValue);
         holder.textAlertRepeat.setText(isRepeatEnabled ? "Every time" : "Only once");
         holder.switchIsAlertEnabled.setChecked(isEnabled);
+
+        // Turning Alert
+        holder.switchIsAlertEnabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                turnAlertOnOff(mAlert, isChecked);
+            }
+        });
     }
 
 
     public class AlertViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.text_AlertsCoinName)  TextView textAlertCoinId;
-        @BindView(R.id.text_AlertsCondition)  TextView textAlertCondition;
-        @BindView(R.id.text_AlertsRepeat)  TextView textAlertRepeat;
+        @BindView(R.id.text_AlertsCoinName) TextView textAlertCoinId;
+        @BindView(R.id.text_AlertsCondition) TextView textAlertCondition;
+        @BindView(R.id.text_AlertsRepeat) TextView textAlertRepeat;
         @BindView(R.id.switch_IsAlertEnabled) SwitchCompat switchIsAlertEnabled;
 
         public AlertViewHolder(@NonNull View itemView) {
@@ -75,4 +87,12 @@ public class AlertsListAdapter extends RecyclerView.Adapter<AlertsListAdapter.Al
     public int getItemCount() {
         return mPriceAlertList.size();
     }
+
+
+    public void turnAlertOnOff(PriceAlert priceAlert, boolean isOn){
+        priceAlert.setEnabled(isOn);
+        mPriceAlertRepository.updateAlert(priceAlert);
+    }
+
+
 }

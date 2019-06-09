@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,20 +16,25 @@ import java.util.List;
 @Dao
 public interface PriceAlertDoa {
 
-    String tableName = DBContract.ALERTS_TABLE_NAME;
+    public String tableName = DBContract.ALERTS_TABLE_NAME;
 
     @Query("SELECT * FROM " + tableName)
-    List<PriceAlert> getAll();
+    public List<PriceAlert> getAll();
 
     @Query("SELECT * FROM " + tableName + " WHERE " + DBContract.ALERTS_COL_COINID + " LIKE :coinId")
-    List<PriceAlert> getByCoinId(String coinId);
+    public List<PriceAlert> getByCoinId(String coinId);
 
     @Query("SELECT COUNT(*) FROM " + DBContract.ALERTS_TABLE_NAME)
-    int countUsers();
+    public int countUsers();
 
     @Insert
-    void insertAll(PriceAlert... priceAlerts);
+    public void insertAll(PriceAlert... priceAlerts);
 
     @Delete
-    void delete(PriceAlert priceAlert);
+    public void deleteAll(PriceAlert... priceAlert);
+
+    @Update
+    public void updateAll(PriceAlert... priceAlert);
+
+
 }

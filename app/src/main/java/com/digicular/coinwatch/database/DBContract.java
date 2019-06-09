@@ -10,9 +10,11 @@ public class DBContract {
     public static final String ALERTS_TABLE_NAME = "price_alerts";
     public static final String ALERTS_COL_ID = "id";
     public static final String ALERTS_COL_COINID = "coin_id";
+    public static final String ALERTS_COL_COINSYMBOL = "coin_symbol";
     public static final String ALERTS_COL_CONDITION = "condition";
     public static final String ALERTS_COL_VALUE = "value";
     public static final String ALERTS_COL_ISENABLED = "is_alert_enabled";
     public static final String ALERTS_COL_REPEAT = "is_repeat_enabled";
+    public static final String ALERTS_COL_TIMEMILLIS = "time_in_millis";
 
 }

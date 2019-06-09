@@ -13,4 +13,5 @@
     <color name="colorDarkGrey">#555555</color>
     <color name="colorGreen">#00B800</color>
     <color name="colorRed">#E90000</color>
+    <color name="colorTransparent">#FFFFFFFF</color>
 </resources>

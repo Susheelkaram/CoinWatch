@@ -80,14 +80,14 @@ public class MainActivity extends AppCompatActivity {
         // WorkManager
         // ----------------------------
 
-        WorkManager workManager = WorkManager.getInstance();
-
-        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(PriceAlertWorker.class)
-                    .setInitialDelay(5, TimeUnit.SECONDS)
-                    .build();
-
-        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(PriceAlertWorker.class, 15, TimeUnit.MINUTES).build();
-        workManager.enqueue(oneTimeWorkRequest);
+//        WorkManager workManager = WorkManager.getInstance();
+//
+//        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(PriceAlertWorker.class)
+//                    .setInitialDelay(5, TimeUnit.SECONDS)
+//                    .build();
+//
+//        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(PriceAlertWorker.class, 15, TimeUnit.MINUTES).build();
+//        workManager.enqueue(oneTimeWorkRequest);
 
     }
 
@@ -107,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                     coinInfoList= response.body();
-                    Toast.makeText(getApplicationContext(), "Success " + coinInfoList.get(0).getCurrentPrice(), Toast.LENGTH_SHORT).show();
                     coinsListAdapter = new CoinsListAdapter(MainActivity.this, coinInfoList);
                     rv_CoinsInfoList.setAdapter(coinsListAdapter);
                 }

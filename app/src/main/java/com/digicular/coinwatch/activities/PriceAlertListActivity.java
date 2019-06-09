@@ -5,16 +5,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import com.digicular.coinwatch.R;
 import com.digicular.coinwatch.adapters.AlertsListAdapter;
+import com.digicular.coinwatch.database.PriceAlertRepository;
 import com.digicular.coinwatch.database.PriceAlert;
-import com.digicular.coinwatch.database.PriceAlertDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,20 +39,26 @@ public class PriceAlertListActivity extends AppCompatActivity {
         rvAlerts.setLayoutManager(new LinearLayoutManager(this));
 
 
+        btnAddAlert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchActivity(mContext, AddAlertActivity.class);
+            }
+        });
 
-        // Adding Sample Alert to DB
-        PriceAlertDatabase pdb = PriceAlertDatabase.getInstance(mContext);
-        PriceAlert priceAlert = new PriceAlert();
-        priceAlert.setCoinId("bitcoin");
-        priceAlert.setCondition("greater");
-        priceAlert.setRepeatEnabled(false);
-        priceAlert.setTargetValue(5742);
-        priceAlert.setEnabled(true);
-        pdb.priceAlertDoa().insertAll(priceAlert);
 
-        List<PriceAlert> alerts = pdb.priceAlertDoa().getAll();
+        PriceAlertRepository priceAlertRepository = new PriceAlertRepository(this);
+
+        List<PriceAlert> alerts = priceAlertRepository.getAllAlerts();
 
         AlertsListAdapter adapter = new AlertsListAdapter(mContext, alerts);
         rvAlerts.setAdapter(adapter);
     }
+
+
+    public void launchActivity(Context context, Class<?> activityClass){
+        Intent intent = new Intent(context, activityClass);
+        startActivity(intent);
+    }
+
 }
