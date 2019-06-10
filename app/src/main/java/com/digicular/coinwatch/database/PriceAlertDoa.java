@@ -3,6 +3,7 @@ package com.digicular.coinwatch.database;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -27,7 +28,7 @@ public interface PriceAlertDoa {
     @Query("SELECT COUNT(*) FROM " + DBContract.ALERTS_TABLE_NAME)
     public int countUsers();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertAll(PriceAlert... priceAlerts);
 
     @Delete
@@ -35,6 +36,5 @@ public interface PriceAlertDoa {
 
     @Update
     public void updateAll(PriceAlert... priceAlert);
-
 
 }

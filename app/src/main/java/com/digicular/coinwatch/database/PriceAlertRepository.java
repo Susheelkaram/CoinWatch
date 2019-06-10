@@ -22,22 +22,11 @@ public class PriceAlertRepository {
     }
 
 
-    public void insertAlert(PriceAlert priceAlert){
+    public void insertAlert(PriceAlert priceAlert) {
         new AsyncTask<Void, Void, Void>(){
             @Override
             protected Void doInBackground(Void... voids) {
                 alertsDb.priceAlertDoa().insertAll(priceAlert);
-                return null;
-            }
-        }.execute();
-    }
-
-    public void deleteAlert(PriceAlert priceAlert){
-        new AsyncTask<Void, Void, Void>(){
-            @Override
-            protected Void doInBackground(Void... voids) {
-                alertsDb.priceAlertDoa().deleteAll(priceAlert);
-                return null;
             }
         }.execute();
     }
@@ -46,13 +35,20 @@ public class PriceAlertRepository {
         return alertsDb.priceAlertDoa().getAll();
     }
 
+    public void deleteAlert(PriceAlert priceAlert){
+        new AsyncTask<Void, Void, Void>(){
+            @Override
+            protected Void doInBackground(Void... voids) {
+                alertsDb.priceAlertDoa().deleteAll(priceAlert);
+            }
+        }.execute();
+    }
 
     public void updateAlert(PriceAlert priceAlert){
         new AsyncTask<Void, Void, Void>(){
             @Override
             protected Void doInBackground(Void... voids) {
                 alertsDb.priceAlertDoa().updateAll(priceAlert);
-                return null;
             }
         }.execute();
     }

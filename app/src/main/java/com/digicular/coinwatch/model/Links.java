@@ -72,7 +72,10 @@ public class Links implements Parcelable {
     }
 
 
-    // Parcelable methods
+
+    /************************
+     * Parceling data
+     *************************/
     @Override
     public void writeToParcel(Parcel out, int flags) {
         out.writeList(homepage);

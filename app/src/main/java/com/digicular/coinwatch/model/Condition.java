@@ -5,6 +5,10 @@ import androidx.annotation.NonNull;
 /**
  * Created by Susheel Kumar Karam
  * Website - SusheelKaram.com
+ *
+ * Defines Condition for a PriceAlert
+ * @Param displayCondition -> To Display in UI (Spinner)
+ * @Param storeableCondition -> To Store in database
  */
 public class Condition {
     private String displayCondition;

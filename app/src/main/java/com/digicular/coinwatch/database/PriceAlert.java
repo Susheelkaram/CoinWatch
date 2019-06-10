@@ -1,15 +1,22 @@
 package com.digicular.coinwatch.database;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import java.io.Serializable;
 
 /**
  * Created by Susheel Kumar Karam
  * Website - SusheelKaram.com
  */
 @Entity(tableName = DBContract.ALERTS_TABLE_NAME)
-public class PriceAlert {
+public class PriceAlert implements Parcelable {
+    public PriceAlert(){}
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -37,8 +44,54 @@ public class PriceAlert {
     private Long timeStamp;
 
 
-    // Getter-setter
+    /************************
+    * Parceling data
+    *************************/
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator(){
+        @Override
+        public PriceAlert createFromParcel(Parcel source) {
+            return new PriceAlert(source);
+        }
 
+        @Override
+        public PriceAlert[] newArray(int size) {
+            return new PriceAlert[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(id);
+        out.writeString(coinId);
+        out.writeString(coinSymbol);
+        out.writeString(condition);
+        out.writeDouble(targetValue);
+        out.writeInt(isRepeatEnabled ? 1 : 0);
+        out.writeInt(isEnabled ? 1 : 0);
+        out.writeLong(timeStamp);
+    }
+
+    @SuppressWarnings("unchecked")
+    private PriceAlert(Parcel parcel){
+        id = parcel.readInt();
+        coinId = parcel.readString();
+        coinSymbol = parcel.readString();
+        condition = parcel.readString();
+        targetValue = parcel.readDouble();
+        isRepeatEnabled = (parcel.readInt() != 0);
+        isEnabled = (parcel.readInt() != 0);
+        timeStamp = parcel.readLong();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
+    /************************
+    * Getter-setter
+    *************************/
     public int getId() {
         return id;
     }
@@ -58,7 +111,6 @@ public class PriceAlert {
     public String getCondition() {
         return condition;
     }
-
     public void setCondition(String condition) {
         this.condition = condition;
     }
@@ -101,5 +153,11 @@ public class PriceAlert {
 
     public void setCoinSymbol(String coinSymbol) {
         this.coinSymbol = coinSymbol;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return coinId + id;
     }
 }

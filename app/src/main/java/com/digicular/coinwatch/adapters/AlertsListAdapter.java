@@ -1,6 +1,7 @@
 package com.digicular.coinwatch.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,10 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.digicular.coinwatch.R;
+import com.digicular.coinwatch.activities.AddAlertActivity;
 import com.digicular.coinwatch.database.PriceAlert;
 import com.digicular.coinwatch.database.PriceAlertRepository;
+import com.digicular.coinwatch.utils.Contract;
 
 import java.util.List;
 
@@ -32,6 +35,7 @@ public class AlertsListAdapter extends RecyclerView.Adapter<AlertsListAdapter.Al
     private Context mContext;
     private List<PriceAlert> mPriceAlertList;
     private PriceAlertRepository mPriceAlertRepository;
+    private View itemView;
 
     public AlertsListAdapter(Context context, List<PriceAlert> priceAlertList) {
         mContext = context;
@@ -43,12 +47,23 @@ public class AlertsListAdapter extends RecyclerView.Adapter<AlertsListAdapter.Al
     @Override
     public AlertViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.alert_item, parent, false);
+        itemView = v;
         return new AlertViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AlertViewHolder holder, int position) {
         PriceAlert mAlert = mPriceAlertList.get(position);
+
+        // Tap on an Alert Launches Alert Editor
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, AddAlertActivity.class);
+                i.putExtra(Contract.ALERT_EXTRA, mAlert);
+                mContext.startActivity(i);
+            }
+        });
 
         String coinId = mAlert.getCoinId();
         String condition = mAlert.getCondition();
@@ -61,7 +76,7 @@ public class AlertsListAdapter extends RecyclerView.Adapter<AlertsListAdapter.Al
         holder.textAlertRepeat.setText(isRepeatEnabled ? "Every time" : "Only once");
         holder.switchIsAlertEnabled.setChecked(isEnabled);
 
-        // Turning Alert
+        // Turning Alert ON/OFF
         holder.switchIsAlertEnabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

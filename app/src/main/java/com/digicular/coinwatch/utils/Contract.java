@@ -26,6 +26,7 @@ public class Contract {
     public static final String ALERT_HIGHER = "Rises above";
     public static final String ALERT_VALLOWER = "<=";
     public static final String ALERT_VALHIGHER = ">=";
+    public static final String ALERT_EXTRA = "price_alert_extra";
 
 
 }

@@ -1,6 +1,9 @@
 package com.digicular.coinwatch.utils;
 
 import android.content.Context;
+import android.widget.Spinner;
+
+import com.digicular.coinwatch.model.Condition;
 
 import java.util.Random;
 
@@ -45,5 +48,17 @@ public class Utils {
 
         Random r = new Random();
         return r.nextInt((max - min) + 1) + min;
+    }
+
+    public static int getItemIndex(Spinner spinner, String myString){
+        int index = 0;
+        for (int i = 0; i < spinner.getCount(); i++){
+            Condition condition = (Condition) spinner.getItemAtPosition(i);
+            if (condition.getCondition().equals(myString)){
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 }

@@ -47,6 +47,8 @@ public class PriceAlertListActivity extends AppCompatActivity {
         });
 
 
+
+
         PriceAlertRepository priceAlertRepository = new PriceAlertRepository(this);
 
         List<PriceAlert> alerts = priceAlertRepository.getAllAlerts();
