@@ -10,11 +10,13 @@ import java.util.Date;
 /**
  * Created by Susheel Kumar Karam
  * Website - SusheelKaram.com
+ *
+ * Date formatter for Price chart (MPAndroid Chart) in Coin Details
  */
 public class XDateValueFormatter extends IndexAxisValueFormatter {
-    String mode;
+    private String mode;
 
-    SimpleDateFormat sd;
+    private SimpleDateFormat sd;
 
     public XDateValueFormatter(String mode) {
         this.mode = mode;

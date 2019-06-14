@@ -9,6 +9,8 @@ import java.util.ArrayList;
  * Website - SusheelKaram.com
  */
 public class Contract {
+
+    // Coin API
     public static final String BASE_URL = "https://api.coingecko.com/api/v3/";
     public static final String CURRENCY = "usd";
 
@@ -29,4 +31,7 @@ public class Contract {
     public static final String ALERT_EXTRA = "price_alert_extra";
 
 
+    // Preferences
+    public static final String PREF_SETTINGS = "app_settings";
+    public static final String PREFO_ISFIRSTLAUNCH = "is_first_launch";
 }
