@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.digicular.coinwatch.R;
 import com.digicular.coinwatch.activities.CoinDetailActivity;
+import com.digicular.coinwatch.activities.PickCryptoActivity;
 import com.digicular.coinwatch.activities.PriceAlertListActivity;
 import com.digicular.coinwatch.model.CoinInfo;
 import com.squareup.picasso.Picasso;
@@ -44,6 +45,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.Coin
         public TextView tv_24HrChangePercent;
         public CardView cv_CoinCard;
         public Button button_AddAlert;
+        public Button button_AddTransaction;
 
         public CoinViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -53,9 +55,9 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.Coin
             tv_24HrChangePercent = itemView.findViewById(R.id.textView_24HrChangePercent);
             cv_CoinCard = itemView.findViewById(R.id.card_CoinCard);
             button_AddAlert = itemView.findViewById(R.id.button_AddAlert);
+            button_AddTransaction = itemView.findViewById(R.id.button_AddTransaction);
 
             // Launching Alerts activity
-
             button_AddAlert.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -64,6 +66,13 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.Coin
                 }
             });
 
+            button_AddTransaction.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, PickCryptoActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
         }
     }
 

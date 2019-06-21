@@ -7,6 +7,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">normal</item>
         <!--<item name="android:statusBarColor">@color/colorXLightGrey</item>-->
     </style>
 
@@ -58,5 +61,26 @@
     <style name="StyleRowMoreInfo">
         <item name="android:background">@drawable/border_bottom</item>
         <item name="android:padding">10dp</item>
+    </style>
+
+    <!--Custom Material Buttons Style-->
+    <style name="myTextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!--Custom Headings-->
+    <style name="myHeading">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="mySmallText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorGrey</item>
+    </style>
+
+    <style name="mySmallerText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorGrey</item>
     </style>
 </resources>

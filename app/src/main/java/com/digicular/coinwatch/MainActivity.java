@@ -11,8 +11,12 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -21,11 +25,15 @@ import com.digicular.coinwatch.alerts.PriceAlertWorker;
 import com.digicular.coinwatch.controller.CoinApi;
 import com.digicular.coinwatch.model.CoinInfo;
 import com.digicular.coinwatch.utils.Contract;
+import com.digicular.coinwatch.utils.InitialSetup;
+import com.digicular.coinwatch.utils.PreferenceManager;
 import com.digicular.coinwatch.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,39 +46,57 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
     Toolbar appBar;
-    RecyclerView rv_CoinsInfoList;
-    SwipeRefreshLayout swipeRefreshLayout;
-    ProgressBar pbLoading;
+    @BindView(R.id.recyclerView_CoinsInfoList) RecyclerView rv_CoinsInfoList;
+    @BindView(R.id.swipeRefreshLayout_refresh) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.progressBar_Loading) ProgressBar pbLoading;
+    @BindView(R.id.ll_EmptyView) LinearLayout layout_EmptyView;
+    @BindView(R.id.button_EmptyViewRetry) Button btnEmptyViewRetry;
 
 
-    CoinsListAdapter coinsListAdapter;
-    ArrayList<CoinInfo> coinInfoList;
-    String coinId;
+    private CoinsListAdapter coinsListAdapter;
+    private ArrayList<CoinInfo> coinInfoList;
+    private String coinId;
 
-    protected final String CURRENCY = "usd";
-    protected final String COIN_IDS = "bitcoin,ethereum,ripple,eos,bitcoin-cash,litecoin,binancecoin,cardano,stellar";
+    private PreferenceManager preferenceManager;
+
+    protected String CURRENCY;
+    protected String COIN_IDS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ButterKnife.bind(this);
+
         appBar = (Toolbar) findViewById(R.id.AppBar);
-        rv_CoinsInfoList = (RecyclerView) findViewById(R.id.recyclerView_CoinsInfoList);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout_refresh);
-        pbLoading = (ProgressBar) findViewById(R.id.progressBar_Loading);
 
         setSupportActionBar(appBar);
+
+        InitialSetup firstLaunchSetup = new InitialSetup(this);
+        firstLaunchSetup.start();
+
+        preferenceManager = PreferenceManager.getInstance(getApplicationContext(), Contract.PREF_SETTINGS);
+        CURRENCY = preferenceManager.getString(Contract.PREFO_CURRENCY);
+        COIN_IDS = TextUtils.join(",", preferenceManager.getArrayList(Contract.PREFO_COINSTOWATCH));
 
         rv_CoinsInfoList.setHasFixedSize(true);
         rv_CoinsInfoList.setLayoutManager(new LinearLayoutManager(this));
 
         getCoinsInfo(CURRENCY, COIN_IDS);
 
+        btnEmptyViewRetry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layout_EmptyView.setVisibility(View.GONE);
+                refreshCoinsInfo();
+            }
+        });
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getCoinsInfo(CURRENCY, COIN_IDS);
+                refreshCoinsInfo();
             }
         });
 
@@ -91,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void getCoinsInfo(String currency, String coinIds){
+    private void getCoinsInfo(String currency, String coinIds){
 
         Retrofit retrofit = Utils.getRetrofitWithCache(this, Contract.BASE_URL);
 
@@ -104,9 +130,11 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<CoinInfo>> call, Response<ArrayList<CoinInfo>> response) {
                 if(!response.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "Request cannot be processed", Toast.LENGTH_SHORT).show();
+                    layout_EmptyView.setVisibility(View.VISIBLE);
                 }
                 else {
                     coinInfoList= response.body();
+                    layout_EmptyView.setVisibility(View.GONE);
                     coinsListAdapter = new CoinsListAdapter(MainActivity.this, coinInfoList);
                     rv_CoinsInfoList.setAdapter(coinsListAdapter);
                 }
@@ -119,9 +147,15 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Request Failed" , Toast.LENGTH_SHORT).show();
                 Log.d("FAIL", t.getMessage() + "-----" + t.getCause());
                 swipeRefreshLayout.setRefreshing(false);
+                layout_EmptyView.setVisibility(View.VISIBLE);
                 pbLoading.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void refreshCoinsInfo(){
+        pbLoading.setVisibility(View.VISIBLE);
+        getCoinsInfo(CURRENCY, COIN_IDS);
     }
 
 }

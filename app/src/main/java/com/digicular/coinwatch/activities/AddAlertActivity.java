@@ -87,7 +87,7 @@ public class AddAlertActivity extends AppCompatActivity {
         /****************************
          * Alert EDITING Mode
          ****************************/
-        /
+
         Intent inIntent = getIntent();
         PriceAlert alert = inIntent.getParcelableExtra(Contract.ALERT_EXTRA);
 

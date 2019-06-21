@@ -27,6 +27,7 @@ public class PriceAlertRepository {
             @Override
             protected Void doInBackground(Void... voids) {
                 alertsDb.priceAlertDoa().insertAll(priceAlert);
+                return null;
             }
         }.execute();
     }
@@ -40,6 +41,7 @@ public class PriceAlertRepository {
             @Override
             protected Void doInBackground(Void... voids) {
                 alertsDb.priceAlertDoa().deleteAll(priceAlert);
+                return null;
             }
         }.execute();
     }
@@ -49,6 +51,7 @@ public class PriceAlertRepository {
             @Override
             protected Void doInBackground(Void... voids) {
                 alertsDb.priceAlertDoa().updateAll(priceAlert);
+                return null;
             }
         }.execute();
     }

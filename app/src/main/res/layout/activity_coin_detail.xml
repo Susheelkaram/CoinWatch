@@ -8,8 +8,7 @@
     tools:context=".activities.CoinDetailActivity"
     android:background="@color/colorWhite">
 
-    <include layout="@layout/toolbar"
-        android:id="@+id/AppBar"/>
+    <include layout="@layout/toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"

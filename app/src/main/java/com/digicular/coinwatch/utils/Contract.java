@@ -32,6 +32,11 @@ public class Contract {
 
 
     // Preferences
+    public static final String[] DEFAULT_COINWATCHLIST = { "bitcoin", "ethereum","ripple",
+            "litecoin","bitcoin-cash", "eos","binancecoin","bitcoin-cash-sv", "cardano", "stellar"};
     public static final String PREF_SETTINGS = "app_settings";
     public static final String PREFO_ISFIRSTLAUNCH = "is_first_launch";
+    public static final String PREFO_CURRENCY = "default_currency";
+    public static final String PREFO_COINSTOWATCH = "coins_to_watch";
+
 }
