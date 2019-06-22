@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.digicular.coinwatch.R;
@@ -31,6 +33,8 @@ public class PickCryptoActivity extends AppCompatActivity {
     RecyclerView rvCryptoList;
     @BindView(R.id.button_RefreshCryptoList)
     Button btnRefreshCryptoList;
+    @BindView(R.id.searchView_SearchCryptoList)
+    SearchView searchCryptoList;
 
     private ArrayList<CryptoCurrency> availableCryptoList;
     private Context mContext = this;
@@ -42,12 +46,43 @@ public class PickCryptoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pick_crypto);
 
         ButterKnife.bind(this);
+
+        btnRefreshCryptoList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getAvailableCryptoList();
+            }
+        });
+
         rvCryptoList.setLayoutManager(new LinearLayoutManager(this));
+
+        searchCryptoList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchCryptoList.setIconified(false);
+            }
+        });
+        searchCryptoList.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                cryptoSelectListAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                cryptoSelectListAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
         getAvailableCryptoList();
     }
 
     private void getAvailableCryptoList() {
-        Retrofit retrofit = Utils.getRetrofitWithCache(mContext, Contract.BASE_URL);
+        int cacheExpiryInMins = 7 * 24 * 60;
+
+        Retrofit retrofit = Utils.getRetrofitWithCustomCache(mContext, Contract.BASE_URL, cacheExpiryInMins);
 
         CoinApi coinApi = retrofit.create(CoinApi.class);
 
@@ -61,7 +96,7 @@ public class PickCryptoActivity extends AppCompatActivity {
                 }
                 else {
                     availableCryptoList = response.body();
-                    Log.d("JSON response", response.body().toString());
+                    Log.d("JSON response", response.headers().toString());
                     cryptoSelectListAdapter = new CryptoSelectListAdapter(mContext, availableCryptoList);
                     rvCryptoList.setAdapter(cryptoSelectListAdapter);
                 }

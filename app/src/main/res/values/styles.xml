@@ -64,8 +64,11 @@
     </style>
 
     <!--Custom Material Buttons Style-->
-    <style name="myTextButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textSize">14sp</item>
+    <style name="myMaterialTextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="myMaterialIconButton" parent="Widget.MaterialComponents.Button.TextButton.Icon">
     </style>
 
     <!--Custom Headings-->

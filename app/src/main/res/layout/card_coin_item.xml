@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="1dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
     app:cardElevation="0dp"
     app:contentPadding="10dp">
 
@@ -18,9 +20,9 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_height="match_parent"
             android:layout_weight="4"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
@@ -28,15 +30,31 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="20dp"
                 android:src="@drawable/ic_monetization_on_black_24dp" />
 
-            <TextView
-                android:id="@+id/textView_CoinSymbol"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="BTC"
-                android:textSize="18sp" />
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView_CoinName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bitcoin"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textView_CoinSymbol"
+                    style="@style/mySmallText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BTC"
+                    android:textAllCaps="true" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -85,7 +103,8 @@
             android:layout_weight="3"
             android:gravity="center_vertical|end"
             android:orientation="vertical"
-            android:paddingRight="10dp">
+            android:paddingRight="10dp"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/textView_Holdings"
@@ -105,32 +124,31 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_AddTransaction"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                style="@style/myMaterialIconButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
                 android:minWidth="0dp"
                 android:paddingStart="4dp"
                 android:paddingEnd="2dp"
-                app:icon="@drawable/ic_add_circle_outline_black_24dp"
-                app:iconSize="18dp"
+                app:icon="@drawable/ic_add_black_24dp"
                 app:iconTint="@color/colorLightGrey" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_AddAlert"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                style="@style/myMaterialIconButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
                 android:minWidth="0dp"
                 android:paddingStart="2dp"
                 android:paddingEnd="0dp"
                 app:icon="@drawable/ic_add_alert_black_24dp"
-                app:iconSize="18dp"
                 app:iconTint="@color/colorLightGrey" />
         </LinearLayout>
     </LinearLayout>

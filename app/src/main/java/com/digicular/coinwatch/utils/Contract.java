@@ -14,6 +14,9 @@ public class Contract {
     public static final String BASE_URL = "https://api.coingecko.com/api/v3/";
     public static final String CURRENCY = "usd";
 
+    // Retrofit constants
+    public static final long cacheSize = 20 * 1024 * 1024; // 20MB
+
 
     // Fragment: Coin More info
     public static final String CHART_COINID = "coinId";
@@ -38,5 +41,7 @@ public class Contract {
     public static final String PREFO_ISFIRSTLAUNCH = "is_first_launch";
     public static final String PREFO_CURRENCY = "default_currency";
     public static final String PREFO_COINSTOWATCH = "coins_to_watch";
+
+
 
 }

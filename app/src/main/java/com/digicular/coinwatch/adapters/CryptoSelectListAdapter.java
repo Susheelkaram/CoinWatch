@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.digicular.coinwatch.R;
 import com.digicular.coinwatch.model.CryptoCurrency;
-import com.digicular.coinwatch.utils.Contract;
+import com.digicular.coinwatch.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
  * Website - SusheelKaram.com
  */
 public class CryptoSelectListAdapter extends RecyclerView.Adapter<CryptoSelectListAdapter.CryptoViewHolder>
-      implements Filterable{
+        implements Filterable {
 
     private Context mContext;
     private ArrayList<CryptoCurrency> mAvailableCryptoList;
@@ -51,12 +51,10 @@ public class CryptoSelectListAdapter extends RecyclerView.Adapter<CryptoSelectLi
     @Override
     public void onBindViewHolder(@NonNull CryptoViewHolder holder, int position) {
         CryptoCurrency currency = mAvailableCryptoList.get(position);
-//
-//        holder.textCoinName.setText("Bitcoin");
-//        holder.textCoinSymbol.setText("BTC");
 
-        holder.textListCoinName.setText(currency.getName());
-        holder.textListCoinSymbol.setText(currency.getSymbol());
+        String coinName = Utils.capitalizeWord(currency.getName());
+        holder.textCoinName.setText(coinName);
+        holder.textCoinSymbol.setText(currency.getSymbol());
     }
 
     @Override
@@ -65,26 +63,16 @@ public class CryptoSelectListAdapter extends RecyclerView.Adapter<CryptoSelectLi
     }
 
     public class CryptoViewHolder extends RecyclerView.ViewHolder {
-//        @BindView(R.id.imageView_ListCoinLogo)
-//        ImageView imageCoinLogo;
-//        @BindView(R.id.text_ListCoinName)
-//        TextView textCoinName;
-//        @BindView(R.id.text_ListCoinSymbol)
-//        TextView textCoinSymbol;
-
-        private ImageView imageViewListCoinLogo;
-        private TextView textListCoinName;
-        private TextView textListCoinSymbol;
-
-
+        @BindView(R.id.imageView_ListCoinLogo)
+        ImageView imageCoinLogo;
+        @BindView(R.id.text_ListCoinName)
+        TextView textCoinName;
+        @BindView(R.id.text_ListCoinSymbol)
+        TextView textCoinSymbol;
 
         public CryptoViewHolder(@NonNull View itemView) {
             super(itemView);
-//            ButterKnife.bind(mContext, itemView);
-
-            imageViewListCoinLogo = (ImageView) itemView.findViewById( R.id.imageView_ListCoinLogo );
-            textListCoinName = (TextView) itemView.findViewById( R.id.text_ListCoinName );
-            textListCoinSymbol = (TextView) itemView.findViewById( R.id.text_ListCoinSymbol );
+            ButterKnife.bind(this, itemView);
         }
     }
 
@@ -93,26 +81,54 @@ public class CryptoSelectListAdapter extends RecyclerView.Adapter<CryptoSelectLi
         return searchFilter;
     }
 
-    Filter searchFilter = new Filter() {
+
+    /**********************
+    * Search Filter Logic
+    ***********************/
+    private Filter searchFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             String matchString = constraint.toString().toLowerCase();
-            if(matchString.isEmpty()){
+
+            // If Query is empty
+            if (matchString.isEmpty()) {
                 mAvailableCryptoList = mFullAvailableCryptoList;
             }
             else {
                 ArrayList<CryptoCurrency> filteredList = new ArrayList<>();
+                CryptoCurrency exactMatch = null;
+                ArrayList<CryptoCurrency> nearMatches = new ArrayList<>();
 
-                for(CryptoCurrency currency : mFullAvailableCryptoList){
+                for (CryptoCurrency currency : mFullAvailableCryptoList) {
                     String coinName = currency.getName().toLowerCase();
                     String coinSymbol = currency.getSymbol().toLowerCase();
 
-                    if(coinName.contains(matchString) || coinSymbol.contains(matchString)){
-                        filteredList.add(currency);
+                    if (coinName.contains(matchString) || coinSymbol.contains(matchString)) {
+                        // Exact match
+                        if (coinName.equals(matchString) || coinSymbol.equals(matchString)) {
+                            exactMatch = currency;
+                        }
+
+                        // Near matches - Matches that start with Query
+                        else if(coinName.startsWith(matchString) || coinSymbol.startsWith(matchString)) {
+                            nearMatches.add(currency);
+                        }
+
+                        else {
+                            filteredList.add(currency);
+                        }
                     }
                 }
+                // If exact match found Add it to top of the Near matches list
+                if(exactMatch != null) {
+                    nearMatches.add(0, exactMatch);
+                }
+
+                // Add Matches that start with Search Query to Top of List
+                filteredList.addAll(0,nearMatches);
                 mAvailableCryptoList = filteredList;
             }
+
             FilterResults filterResults = new FilterResults();
             filterResults.values = mAvailableCryptoList;
             return filterResults;

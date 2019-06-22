@@ -4,34 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.PickCryptoActivity"
+    android:background="@color/colorWhite"
     android:orientation="vertical"
     android:padding="15dp"
-    android:background="@color/colorWhite">
+    tools:context=".activities.PickCryptoActivity">
+
     <SearchView
+        android:id="@+id/searchView_SearchCryptoList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@color/colorXXLightGrey"
+        android:iconifiedByDefault="false"
+        android:layoutDirection="rtl"
+        android:queryBackground="@color/colorXXLightGrey"
+        android:queryHint="Ex. 'bitcoin' or 'btc' " />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:background="@drawable/border_bottom">
+        android:background="@drawable/border_bottom"
+        android:gravity="center_vertical">
 
         <TextView
             style="@style/myHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Available currencies"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"/>
+            android:text="Available currencies" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_RefreshCryptoList"
-            style="@style/myTextButton"
+            style="@style/myMaterialTextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Refresh list"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:text="Refresh list" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView

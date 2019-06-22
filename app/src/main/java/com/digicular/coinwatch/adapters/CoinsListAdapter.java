@@ -17,6 +17,7 @@ import com.digicular.coinwatch.activities.CoinDetailActivity;
 import com.digicular.coinwatch.activities.PickCryptoActivity;
 import com.digicular.coinwatch.activities.PriceAlertListActivity;
 import com.digicular.coinwatch.model.CoinInfo;
+import com.digicular.coinwatch.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -40,6 +41,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.Coin
 
     public class CoinViewHolder extends RecyclerView.ViewHolder{
         public ImageView img_CoinLogo;
+        public TextView tv_CoinName;
         public TextView tv_CoinSymbol;
         public TextView tv_CurrentPrice;
         public TextView tv_24HrChangePercent;
@@ -50,6 +52,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.Coin
         public CoinViewHolder(@NonNull View itemView) {
             super(itemView);
             img_CoinLogo = itemView.findViewById(R.id.imageView_CoinLogo);
+            tv_CoinName = itemView.findViewById(R.id.textView_CoinName);
             tv_CoinSymbol = itemView.findViewById(R.id.textView_CoinSymbol);
             tv_CurrentPrice = itemView.findViewById(R.id.textView_CurrentPrice);
             tv_24HrChangePercent = itemView.findViewById(R.id.textView_24HrChangePercent);
@@ -91,6 +94,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.Coin
 
         final String coinId = coin.getId();
         String coinLogoUrl = coin.getImage();
+        String coinName = Utils.capitalizeWord(coin.getName());
         String coinSymbol = coin.getSymbol().toUpperCase();
         String currentPrice = currencySymbol + df.format(coin.getCurrentPrice());
         String change24HPercent;
@@ -104,9 +108,11 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.Coin
             change24HPercent = downArrowHead + df.format(coin.getPriceChangePercentage24h()) + "%";
         }
 
+        coinViewHolder.tv_CoinName.setText(coinName);
         coinViewHolder.tv_CoinSymbol.setText(coinSymbol);
         coinViewHolder.tv_CurrentPrice.setText(currentPrice);
         coinViewHolder.tv_24HrChangePercent.setText(change24HPercent);
+
         Picasso.get().load(coinLogoUrl)
                 .into(coinViewHolder.img_CoinLogo);
 
