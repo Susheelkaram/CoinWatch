@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +21,7 @@ import androidx.work.WorkManager;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -29,12 +32,16 @@ import android.widget.Toast;
 import com.digicular.coinwatch.adapters.CoinsListAdapter;
 import com.digicular.coinwatch.alerts.PriceAlertWorker;
 import com.digicular.coinwatch.controller.CoinApi;
+import com.digicular.coinwatch.fragments.AlertsListFragment;
 import com.digicular.coinwatch.fragments.HomeFragment;
+import com.digicular.coinwatch.fragments.PortfolioDetailFragment;
+import com.digicular.coinwatch.fragments.SettingsFragment;
 import com.digicular.coinwatch.model.CoinInfo;
 import com.digicular.coinwatch.utils.Contract;
 import com.digicular.coinwatch.utils.InitialSetup;
 import com.digicular.coinwatch.utils.PreferenceManager;
 import com.digicular.coinwatch.utils.Utils;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -62,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.ll_EmptyView) LinearLayout layout_EmptyView;
     @BindView(R.id.button_EmptyViewRetry) Button btnEmptyViewRetry;
 
+    @BindView(R.id.bottomNavigationView_AppNavigation)
+    BottomNavigationView bnvNavigation;
+
 
     private CoinsListAdapter coinsListAdapter;
     private ArrayList<CoinInfo> coinInfoList;
@@ -87,10 +97,38 @@ public class MainActivity extends AppCompatActivity {
         firstLaunchSetup.start();
 
         HomeFragment homeFragment = new HomeFragment(this);
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction()
-                .add(R.id.container_ContentFrag,homeFragment)
-                .commit();
+        AlertsListFragment alertsFragment = new AlertsListFragment(this);
+        PortfolioDetailFragment portfolioDetailFragment = new PortfolioDetailFragment(this);
+        SettingsFragment settingsFragment = new SettingsFragment(this);
+
+
+        loadFragment(homeFragment);
+
+        bnvNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Fragment activeFragment;
+                switch (menuItem.getItemId()){
+                    case R.id.navigation_Home:
+                        activeFragment = homeFragment;
+                        loadFragment(activeFragment);
+                        return true;
+                    case R.id.navigation_Portfolio:
+                        activeFragment = portfolioDetailFragment;
+                        loadFragment(activeFragment);
+                        return true;
+                    case R.id.navigation_Alerts:
+                        activeFragment = alertsFragment;
+                        loadFragment(activeFragment);
+                        return true;
+                    case R.id.navigation_Settings:
+                        activeFragment = settingsFragment;
+                        loadFragment(activeFragment);
+                        return true;
+                }
+                return false;
+            }
+        });
 
         /******* FRAGMENTED_START
          *
@@ -139,6 +177,13 @@ public class MainActivity extends AppCompatActivity {
          *
          * ***** FRAGMENTED_END ****/
 
+    }
+
+    private void loadFragment(Fragment fragment){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container_ContentFrag, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     /******* FRAGMENTED_START *******
