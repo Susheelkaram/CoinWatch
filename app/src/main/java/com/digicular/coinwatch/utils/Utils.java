@@ -1,6 +1,7 @@
 package com.digicular.coinwatch.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Spinner;
 
 import com.digicular.coinwatch.model.Condition;
@@ -39,6 +40,7 @@ public class Utils {
         return retrofit;
     }
 
+    // Fetches Retrofit instance with a Cache Support of upto 20MB
     public static Retrofit getRetrofitWithCustomCache(Context context, String baseUrl, int maxAgeMins){
         long cacheSize = Contract.cacheSize;
 
@@ -53,6 +55,7 @@ public class Utils {
         return retrofit;
     }
 
+    // Returns custom OkHttp Client instance with custom Cache size, custom Cache expiration time
     public static OkHttpClient getCustomOkHttpClient(Context context, long cacheSize, int maxAgeMins){
         Cache cache = new Cache(context.getCacheDir(), cacheSize);
 
@@ -84,10 +87,12 @@ public class Utils {
         return client;
     }
 
+    // Capitalizes first letter in a word
     public static String capitalizeWord(String word){
         return word.substring(0,1).toUpperCase() + word.substring(1);
     }
 
+    // Returns random number in a given range
     public static int getRandomNumberInRange(int min, int max) {
 
         if (min >= max) {
@@ -98,6 +103,7 @@ public class Utils {
         return r.nextInt((max - min) + 1) + min;
     }
 
+    // Gets index of an Spinner item by matching String
     public static int getItemIndex(Spinner spinner, String myString){
         int index = 0;
         for (int i = 0; i < spinner.getCount(); i++){
@@ -108,5 +114,11 @@ public class Utils {
             }
         }
         return index;
+    }
+
+    // Simple helper to Quickly Explicitly launch an activity without any Extras/Args
+    public static void launchActivity(Context context, Class<?> activityClass){
+        Intent intent = new Intent(context, activityClass);
+        context.startActivity(intent);
     }
 }

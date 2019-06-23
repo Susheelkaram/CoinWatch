@@ -4,19 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     android:orientation="vertical"
-    tools:context=".activities.PriceAlertListActivity"
-    android:layout_margin="10dp">
+    tools:context=".activities.PriceAlertListActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_Alerts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <!--<androidx.recyclerview.widget.RecyclerView-->
+    <!--android:id="@+id/recyclerView_Alerts"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"/>-->
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_AddAlert"
+    <!--<com.google.android.material.button.MaterialButton-->
+    <!--android:id="@+id/button_AddAlert"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Add Alert" />-->
+
+    <FrameLayout
+        android:id="@+id/container_AlertFrag"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Alert" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

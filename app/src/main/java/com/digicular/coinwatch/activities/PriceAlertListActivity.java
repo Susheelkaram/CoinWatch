@@ -1,6 +1,7 @@
 package com.digicular.coinwatch.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,7 @@ import com.digicular.coinwatch.R;
 import com.digicular.coinwatch.adapters.AlertsListAdapter;
 import com.digicular.coinwatch.database.PriceAlertRepository;
 import com.digicular.coinwatch.database.PriceAlert;
+import com.digicular.coinwatch.fragments.AlertsListFragment;
 
 import java.util.List;
 
@@ -21,10 +23,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PriceAlertListActivity extends AppCompatActivity {
-    @BindView(R.id.recyclerView_Alerts)
-    RecyclerView rvAlerts;
-    @BindView(R.id.button_AddAlert)
-    Button btnAddAlert;
+//    @BindView(R.id.recyclerView_Alerts)
+//    RecyclerView rvAlerts;
+//    @BindView(R.id.button_AddAlert)
+//    Button btnAddAlert;
 
     private Context mContext = this;
 
@@ -32,35 +34,37 @@ public class PriceAlertListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_price_alert_list);
+//
+//        ButterKnife.bind(this);
+//
+//        rvAlerts.setHasFixedSize(true);
+//        rvAlerts.setLayoutManager(new LinearLayoutManager(this));
+//
+//
+//        btnAddAlert.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Utils.launchActivity(mContext, AddAlertActivity.class);
+//            }
+//        });
+//
+//
+//
+//
+//        PriceAlertRepository priceAlertRepository = new PriceAlertRepository(this);
+//
+//        List<PriceAlert> alerts = priceAlertRepository.getAllAlerts();
+//
+//        AlertsListAdapter adapter = new AlertsListAdapter(mContext, alerts);
+//        rvAlerts.setAdapter(adapter);
 
-        ButterKnife.bind(this);
+        AlertsListFragment alertsListFragment = new AlertsListFragment(this);
 
-        rvAlerts.setHasFixedSize(true);
-        rvAlerts.setLayoutManager(new LinearLayoutManager(this));
-
-
-        btnAddAlert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchActivity(mContext, AddAlertActivity.class);
-            }
-        });
-
-
-
-
-        PriceAlertRepository priceAlertRepository = new PriceAlertRepository(this);
-
-        List<PriceAlert> alerts = priceAlertRepository.getAllAlerts();
-
-        AlertsListAdapter adapter = new AlertsListAdapter(mContext, alerts);
-        rvAlerts.setAdapter(adapter);
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .add(R.id.container_AlertFrag, alertsListFragment)
+                .commit();
     }
 
-
-    public void launchActivity(Context context, Class<?> activityClass){
-        Intent intent = new Intent(context, activityClass);
-        startActivity(intent);
-    }
 
 }

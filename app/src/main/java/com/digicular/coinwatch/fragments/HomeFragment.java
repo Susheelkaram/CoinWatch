@@ -88,9 +88,8 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         ButterKnife.bind(this, view);
-
-
 
         preferenceManager = PreferenceManager.getInstance(mContext.getApplicationContext(), Contract.PREF_SETTINGS);
         CURRENCY = preferenceManager.getString(Contract.PREFO_CURRENCY);
@@ -109,6 +108,8 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+        // Swipe-down to Refresh
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -120,6 +121,7 @@ public class HomeFragment extends Fragment {
     }
 
 
+    // Fetches CoinsInfo fron REST Api and Binds data to RecyclerView adapter
     private void getCoinsInfo(String currency, String coinIds){
 
         Retrofit retrofit = Utils.getRetrofitWithCache(mContext, Contract.BASE_URL);
@@ -156,6 +158,8 @@ public class HomeFragment extends Fragment {
         });
     }
 
+
+    // Re-fetches JSON and refreshes data
     private void refreshCoinsInfo(){
         pbLoading.setVisibility(View.VISIBLE);
         getCoinsInfo(CURRENCY, COIN_IDS);
