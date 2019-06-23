@@ -1,27 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
-
-    <include
-        android:id="@+id/header"
-        layout="@layout/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true" />
+    tools:context=".fragments.HomeFragment">
 
     <LinearLayout
+        android:id="@+id/layoutContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/layoutContent"
         android:layout_below="@id/header"
-        android:visibility="gone">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -116,8 +105,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:textAllCaps="false"
-                        android:text="Try again" />
+                        android:text="Try again"
+                        android:textAllCaps="false" />
                 </LinearLayout>
 
             </RelativeLayout>
@@ -146,24 +135,4 @@
             <!--app:strokeWidth="2dp" />-->
         </LinearLayout>
     </LinearLayout>
-
-    <FrameLayout
-        android:layout_below="@id/header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/container_ContentFrag"
-        android:orientation="vertical"/>
-
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView_AppNavigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_navigation_menu"
-        android:elevation="6dp"
-        app:itemIconTint="@color/bottom_nav_color"
-        app:itemTextColor="@color/bottom_nav_color" />
-
-
-</RelativeLayout>
+</FrameLayout>

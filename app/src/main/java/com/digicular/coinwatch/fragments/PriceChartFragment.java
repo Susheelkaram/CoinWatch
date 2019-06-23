@@ -133,10 +133,8 @@ public class PriceChartFragment extends Fragment {
         LineDataSet lineDataSet = generateLineDataSet(prices, "Price");
 
         // Styling DataSet
-        lineDataSet.setColor(getResources().getColor(R.color.colorAccent));
+        lineDataSet.setColor(mContext.getResources().getColor(R.color.colorAccent));
         lineDataSet.setDrawCircles(false);
-//        lineDataSet.setCircleColor(getResources().getColor(R.color.colorBlack));
-//        lineDataSet.setCircleHoleColor(getResources().getColor(R.color.colorBlack));
         lineDataSet.setCircleRadius(1f);
         lineDataSet.setLineWidth(2);
 
