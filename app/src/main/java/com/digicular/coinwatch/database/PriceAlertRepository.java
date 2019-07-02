@@ -3,9 +3,14 @@ package com.digicular.coinwatch.database;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.room.Room;
+
 import com.digicular.coinwatch.database.PriceAlert;
 import com.digicular.coinwatch.database.PriceAlertDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +23,13 @@ public class PriceAlertRepository {
 
     public PriceAlertRepository(Context context){
         mContext = context;
-        alertsDb = PriceAlertDatabase.getInstance(mContext);
+
+        if(alertsDb == null){
+            alertsDb = Room.databaseBuilder(mContext.getApplicationContext(),
+                    PriceAlertDatabase.class, DBContract.ALERTS_TABLE_NAME)
+                    .allowMainThreadQueries()
+                    .build();
+        }
     }
 
 

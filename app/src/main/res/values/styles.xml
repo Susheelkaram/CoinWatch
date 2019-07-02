@@ -10,7 +10,6 @@
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">normal</item>
-        <!--<item name="android:statusBarColor">@color/colorXLightGrey</item>-->
     </style>
 
     <style name="TextInsignificantStyle">
@@ -69,9 +68,18 @@
     </style>
 
     <style name="myMaterialIconButton" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+
     </style>
 
-    <!--Custom Headings-->
+    <style name="myMaterialButton" parent="Widget.MaterialComponents.Button">
+
+    </style>
+
+    <style name="myMaterialOutlineButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+
+    </style>
+
+    <!--Custom Text / Headings-->
     <style name="myHeading">
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
@@ -82,8 +90,28 @@
         <item name="android:textColor">@color/colorGrey</item>
     </style>
 
+
+
     <style name="mySmallerText">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/colorGrey</item>
+    </style>
+
+    <style name="myTinyText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/colorGrey</item>
+    </style>
+
+    <style name="myMediumText">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="myBigBoldText">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="myBigText">
+        <item name="android:textSize">20sp</item>
     </style>
 </resources>

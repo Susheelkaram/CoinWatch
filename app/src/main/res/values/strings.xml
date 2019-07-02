@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CoinWatch</string>
+    <string name="app_name">Coin Watch</string>
 
     <string-array name="AlertConditionChoices">
         <item>falls below &lt;=</item>

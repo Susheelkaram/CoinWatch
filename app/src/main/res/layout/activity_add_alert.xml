@@ -13,18 +13,56 @@
         android:orientation="vertical"
         tools:context=".activities.AddAlertActivity">
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/myBigText"
+                android:layout_marginEnd="10dp"
+                android:text="When"/>
+            <TextView
+                android:id="@+id/text_AlertCoinId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/myBigBoldText"
+                android:layout_marginEnd="10dp"
+                android:text="Bitcoin"/>
 
-            <EditText
-                android:id="@+id/input_AlertCoinId"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="40dp"
-                android:hint="Crypto name"
-                android:textSize="20sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/text_AlertCoinSymbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/myBigText"
+                android:layout_marginEnd="10dp"
+                android:text="BTC"
+                android:textAllCaps="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/myBigText"
+                android:layout_marginEnd="10dp"
+                android:text="is"/>
+
+        </LinearLayout>
+
+
+        <!--<com.google.android.material.textfield.TextInputLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<EditText-->
+                <!--android:id="@+id/input_AlertCoinId"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginBottom="40dp"-->
+                <!--android:hint="Crypto name"-->
+                <!--android:textSize="20sp" />-->
+        <!--</com.google.android.material.textfield.TextInputLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,6 +99,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:hint="Target value"
+                    android:inputType="numberDecimal"
                     android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -86,6 +125,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_ConfirmAddAlert"
+            style="@style/myMaterialButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -100,7 +140,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_DeleteAlert"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/myMaterialOutlineButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
@@ -109,6 +149,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_SaveAlert"
+                style="@style/myMaterialButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

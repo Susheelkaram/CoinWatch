@@ -4,6 +4,8 @@ package com.digicular.coinwatch.fragments;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -30,4 +32,8 @@ public class PortfolioDetailFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_portfolio_detail, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
 }

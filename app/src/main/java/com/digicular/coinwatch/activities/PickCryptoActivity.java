@@ -47,6 +47,7 @@ public class PickCryptoActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        // Refreshes list of available Crypto currencies
         btnRefreshCryptoList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,12 +57,15 @@ public class PickCryptoActivity extends AppCompatActivity {
 
         rvCryptoList.setLayoutManager(new LinearLayoutManager(this));
 
+        // Activates search bar when click anywhere on it
         searchCryptoList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 searchCryptoList.setIconified(false);
             }
         });
+
+        // Listener to fetch search results as you type/ submit
         searchCryptoList.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -76,6 +80,7 @@ public class PickCryptoActivity extends AppCompatActivity {
             }
         });
 
+        // Getting list of crypto currencies
         getAvailableCryptoList();
     }
 

@@ -1,6 +1,8 @@
 package com.digicular.coinwatch.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.digicular.coinwatch.R;
+import com.digicular.coinwatch.activities.AddAlertActivity;
 import com.digicular.coinwatch.model.CryptoCurrency;
+import com.digicular.coinwatch.utils.Contract;
 import com.digicular.coinwatch.utils.Utils;
 
 import java.util.ArrayList;
@@ -55,6 +59,23 @@ public class CryptoSelectListAdapter extends RecyclerView.Adapter<CryptoSelectLi
         String coinName = Utils.capitalizeWord(currency.getName());
         holder.textCoinName.setText(coinName);
         holder.textCoinSymbol.setText(currency.getSymbol());
+
+//        CryptoCurrency currency = mAvailableCryptoList.get(getAdapterPosition());
+
+        Bundle coinPickedBundle = new Bundle();
+        coinPickedBundle.putString(Contract.EXTRAS_TAG, Contract.EXTRA_TAG_NEWALERT);
+        coinPickedBundle.putString(Contract.PICKER_DATA_COINID, currency.getId());
+        coinPickedBundle.putString(Contract.PICKER_DATA_COINNAME, currency.getName());
+        coinPickedBundle.putString(Contract.PICKER_DATA_COINSYMBOL, currency.getSymbol());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, AddAlertActivity.class);
+                intent.putExtras(coinPickedBundle);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

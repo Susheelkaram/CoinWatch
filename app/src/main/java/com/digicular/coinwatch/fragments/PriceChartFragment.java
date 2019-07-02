@@ -117,6 +117,9 @@ public class PriceChartFragment extends Fragment {
     private void makeChart(MarketChart marketChart, int days) {
         ArrayList<ArrayList<BigDecimal>> prices = marketChart.getPrices();
 
+        lineChart.setNoDataText("Loading data...");
+        lineChart.setNoDataTextColor(mContext.getResources().getColor(R.color.colorPrimary));
+
         // Setting Date/Time format on X-Axis
         if (days == 1) {
             // Format - 21:04
@@ -133,7 +136,7 @@ public class PriceChartFragment extends Fragment {
         LineDataSet lineDataSet = generateLineDataSet(prices, "Price");
 
         // Styling DataSet
-        lineDataSet.setColor(mContext.getResources().getColor(R.color.colorAccent));
+        lineDataSet.setColor(mContext.getResources().getColor(R.color.colorSecondary));
         lineDataSet.setDrawCircles(false);
         lineDataSet.setCircleRadius(1f);
         lineDataSet.setLineWidth(2);

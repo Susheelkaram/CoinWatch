@@ -121,7 +121,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    // Fetches CoinsInfo fron REST Api and Binds data to RecyclerView adapter
+    // Fetches CoinsInfo from REST Api and Binds data to RecyclerView adapter
     private void getCoinsInfo(String currency, String coinIds){
 
         Retrofit retrofit = Utils.getRetrofitWithCache(mContext, Contract.BASE_URL);

@@ -7,9 +7,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +22,13 @@ import android.widget.Button;
 import com.digicular.coinwatch.R;
 import com.digicular.coinwatch.activities.AddAlertActivity;
 import com.digicular.coinwatch.adapters.AlertsListAdapter;
+import com.digicular.coinwatch.database.AlertsViewModel;
 import com.digicular.coinwatch.database.PriceAlert;
 import com.digicular.coinwatch.database.PriceAlertRepository;
 import com.digicular.coinwatch.model.Condition;
 import com.digicular.coinwatch.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -38,6 +44,7 @@ public class AlertsListFragment extends Fragment {
     Button btnAddAlert;
 
     private Context mContext;
+    private AlertsViewModel alertsViewModel;
 
     public AlertsListFragment(Context context) {
         mContext = context;
@@ -58,6 +65,7 @@ public class AlertsListFragment extends Fragment {
         rvAlerts.setHasFixedSize(true);
         rvAlerts.setLayoutManager(new LinearLayoutManager(mContext));
 
+        alertsViewModel = ViewModelProviders.of(this).get(AlertsViewModel.class);
 
         btnAddAlert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,14 +74,19 @@ public class AlertsListFragment extends Fragment {
             }
         });
 
-
-
-
-        PriceAlertRepository priceAlertRepository = new PriceAlertRepository(mContext);
-
-        List<PriceAlert> alerts = priceAlertRepository.getAllAlerts();
-
-        AlertsListAdapter adapter = new AlertsListAdapter(mContext, alerts);
+        AlertsListAdapter adapter = new AlertsListAdapter(mContext);
         rvAlerts.setAdapter(adapter);
+        adapter.updateData(alertsViewModel.getAllAlerts());
+
+
+//        alertsViewModel.getAllAlerts().observe(this, new Observer<List<PriceAlert>>() {
+//            @Override
+//            public void onChanged(List<PriceAlert> priceAlerts) {
+//                Log.d("LIVE DATA", "Table updated: " + priceAlerts.size());
+//                adapter.updateData(priceAlerts);
+//            }
+//        });
     }
+
+
 }

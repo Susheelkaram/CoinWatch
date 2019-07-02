@@ -13,13 +13,16 @@ import androidx.room.RoomDatabase;
 
 @Database(entities = {PriceAlert.class}, version = 1)
 public abstract class PriceAlertDatabase extends RoomDatabase {
+//    private static PriceAlertDatabase priceAlertDatabase;
+//    private static Context mContext;
 
     public abstract PriceAlertDoa priceAlertDoa();
 
-    public static PriceAlertDatabase getInstance(Context context){
-        PriceAlertDatabase priceAlertDatabase = Room.databaseBuilder(context.getApplicationContext(), PriceAlertDatabase.class, DBContract.ALERTS_TABLE_NAME)
-                .allowMainThreadQueries()
-                .build();
-        return priceAlertDatabase;
-    }
+//    public static PriceAlertDatabase getInstance(){
+//        if(priceAlertDatabase == null) {
+//            priceAlertDatabase = Room.databaseBuilder(mContext.getApplicationContext(), PriceAlertDatabase.class, DBContract.ALERTS_TABLE_NAME)
+//                    .build();
+//        }
+//        return priceAlertDatabase;
+//    }
 }

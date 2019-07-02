@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.digicular.coinwatch.R;
 import com.digicular.coinwatch.database.PriceAlertRepository;
@@ -28,8 +30,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AddAlertActivity extends AppCompatActivity {
-    @BindView(R.id.input_AlertCoinId)
-    EditText input_AlertCoinId;
+    @BindView(R.id.text_AlertCoinId)
+    TextView text_AlertCoinId;
+    @BindView(R.id.text_AlertCoinSymbol)
+    TextView text_AlertCoinSymbol;
     @BindView(R.id.spinner_AlertCondition)
     Spinner spinner_AlertCondition;
     @BindView(R.id.input_AlertTargetValue)
@@ -45,7 +49,6 @@ public class AddAlertActivity extends AppCompatActivity {
     @BindView(R.id.ll_ButtonsEdit)
     LinearLayout layout_ButtonsEdit;
 
-
     private PriceAlertRepository priceAlertRepository;
     private ArrayList<Condition> conditionList = new ArrayList<Condition>();
 
@@ -59,10 +62,6 @@ public class AddAlertActivity extends AppCompatActivity {
         // View Binding
         ButterKnife.bind(this);
 
-
-        /**********************
-         * NEW Alert mode
-         **********************/
 
         // Creating and setting ArrayAdapter for Condition Spinner
         conditionList.add(new Condition(Contract.ALERT_LOWER, Contract.ALERT_VALLOWER));
@@ -83,42 +82,64 @@ public class AddAlertActivity extends AppCompatActivity {
             }
         });
 
+        // Getting extras from Pick coin activity
 
-        /****************************
-         * Alert EDITING Mode
-         ****************************/
+        if (getIntent().getExtras() != null) {
+            Bundle extras = getIntent().getExtras();
+            String tag = extras.getString(Contract.EXTRAS_TAG);
 
-        Intent inIntent = getIntent();
-        PriceAlert alert = inIntent.getParcelableExtra(Contract.ALERT_EXTRA);
+            /**********************
+             * NEW Alert mode
+             **********************/
 
-        if (alert != null) {
-            button_ConfirmAddAlert.setVisibility(View.GONE);
-            layout_ButtonsEdit.setVisibility(View.VISIBLE);
-            setDataToViews(alert);
+            if (tag.equals(Contract.EXTRA_TAG_NEWALERT)) {
+                String coinId = extras.getString(Contract.PICKER_DATA_COINID);
+                String coinSymbol = extras.getString(Contract.PICKER_DATA_COINSYMBOL);
+
+                text_AlertCoinId.setText(coinId);
+                text_AlertCoinSymbol.setText(coinSymbol);
+            }
+
+
+            /****************************
+             * Alert EDITING Mode
+             ****************************/
+
+            else if (tag.equals(Contract.EXTRA_TAG_EDITALERT)) {
+                PriceAlert alert = extras.getParcelable(Contract.ALERT_EXTRA);
+                button_ConfirmAddAlert.setVisibility(View.GONE);
+                layout_ButtonsEdit.setVisibility(View.VISIBLE);
+                Toast.makeText(this, alert.getCondition(), Toast.LENGTH_SHORT).show();
+                setDataToViews(alert);
+
+
+                button_DeleteAlert.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        priceAlertRepository.deleteAlert(alert);
+                        finish();
+                    }
+                });
+
+                button_SaveAlert.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PriceAlert newAlert = getAlertDataFromViews();
+                        newAlert.setId(alert.getId());
+                        priceAlertRepository.insertAlert(newAlert);
+                        finish();
+                    }
+                });
+            }
         }
 
-        button_DeleteAlert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                priceAlertRepository.deleteAlert(alert);
-                finish();
-            }
-        });
 
-        button_SaveAlert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PriceAlert newAlert = getAlertDataFromViews();
-                newAlert.setId(alert.getId());
-                priceAlertRepository.insertAlert(newAlert);
-                finish();
-            }
-        });
     }
 
     // Fetches Data from Views and returns 'PriceAlert' object
     public PriceAlert getAlertDataFromViews() {
-        String cryptoName = input_AlertCoinId.getText().toString();
+        String coinId = text_AlertCoinId.getText().toString().toLowerCase();
+        String coinSymbol = text_AlertCoinSymbol.getText().toString().toLowerCase();
         Condition condition = (Condition) spinner_AlertCondition.getSelectedItem();
         String conditionValue = condition.getCondition();
         double targetValue = Double.parseDouble(input_AlertTargetValue.getText().toString());
@@ -127,7 +148,8 @@ public class AddAlertActivity extends AppCompatActivity {
         Long timeStamp = System.currentTimeMillis();
 
         PriceAlert alert = new PriceAlert();
-        alert.setCoinId(cryptoName);
+        alert.setCoinId(coinId);
+        alert.setCoinSymbol(coinSymbol);
         alert.setCondition(conditionValue);
         alert.setTargetValue(targetValue);
         alert.setRepeatEnabled(isRepeatOn);
@@ -138,11 +160,14 @@ public class AddAlertActivity extends AppCompatActivity {
     }
 
     // Alert EDITING Mode: Sets Data to Views
-    public void setDataToViews(PriceAlert alert){
-        input_AlertCoinId.setText(alert.getCoinId());
+    public void setDataToViews(PriceAlert alert) {
+        text_AlertCoinId.setText(alert.getCoinId());
+        text_AlertCoinSymbol.setText(alert.getCoinSymbol());
         input_AlertTargetValue.setText(Double.toString(alert.getTargetValue()));
         switch_AlertRepeat.setChecked(alert.isRepeatEnabled());
+
         String condition = alert.getCondition();
-        spinner_AlertCondition.setSelection(Utils.getItemIndex(spinner_AlertCondition, condition));
+        int index = Utils.getItemIndex(spinner_AlertCondition, condition);
+        spinner_AlertCondition.setSelection(index);
     }
 }

@@ -1,11 +1,15 @@
 package com.digicular.coinwatch.activities;
 
+import android.content.Context;
 import android.content.Intent;
 
 import com.google.android.material.tabs.TabLayout;
+
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.appcompat.widget.Toolbar;
 
 import android.widget.TextView;
@@ -20,6 +24,8 @@ import com.digicular.coinwatch.model.MarketData;
 import com.digicular.coinwatch.utils.Contract;
 import com.digicular.coinwatch.utils.Utils;
 
+import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +35,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class CoinDetailActivity extends AppCompatActivity {
+    private Context mContext = this;
     Toolbar appBar;
     TabLayout tabLayoutCoinDetail;
     ViewPager viewPagerCoinDetail;
@@ -64,6 +71,8 @@ public class CoinDetailActivity extends AppCompatActivity {
         tvHigh24H = (TextView) findViewById(R.id.textView_24HrHigh);
 
         setSupportActionBar(appBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Intent intent = getIntent();
         coinId = intent.getStringExtra("coinId");
@@ -72,8 +81,7 @@ public class CoinDetailActivity extends AppCompatActivity {
     }
 
 
-
-    public void getDetailsCoin(final String coinId){
+    public void getDetailsCoin(final String coinId) {
         Retrofit retrofit = Utils.getRetrofitWithCache(this, Contract.BASE_URL);
 
         CoinApi coinApi = retrofit.create(CoinApi.class);
@@ -83,10 +91,9 @@ public class CoinDetailActivity extends AppCompatActivity {
         coinInfoDetailedCall.enqueue(new Callback<CoinInfoDetailed>() {
             @Override
             public void onResponse(Call<CoinInfoDetailed> call, Response<CoinInfoDetailed> response) {
-                if (!response.isSuccessful()){
+                if (!response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Request cannot be processed", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
 //                    Toast.makeText(getApplicationContext(), "Request Success", Toast.LENGTH_SHORT).show();
 
                     CoinInfoDetailed coinDetails = response.body();
@@ -101,28 +108,43 @@ public class CoinDetailActivity extends AppCompatActivity {
         });
     }
 
-    public void bindData(CoinInfoDetailed coinDetails){
+    public void bindData(CoinInfoDetailed coinDetails) {
         MarketData marketData = coinDetails.getMarketData();
+
+        DecimalFormat df = new DecimalFormat("###,###.##");
 
         String coinName = coinDetails.getName();
         String coinSymbol = coinDetails.getSymbol();
-        String currentPrice = Double.toString(marketData.getCurrentPrice(currency));
+        String coinFullName = coinName + " (" + coinSymbol.toUpperCase() + ")";
+        String currentPrice = Utils.formatNumber(marketData.getCurrentPrice(currency));
         String changePercent24H = Double.toString(marketData.getChangePercentage24H());
         String rank = Integer.toString(coinDetails.getMarketCapRank());
-        String marketCap = (marketData.getMarketCap(currency)).toString();
-        String high24H = currencySymbol + Double.toString(marketData.getHigh24H(currency));
-        String low24H = currencySymbol + Double.toString(marketData.getLow24H(currency));
+        String marketCap = Utils.formatNumber(marketData.getMarketCap(currency));
+        String high24H = currencySymbol + Utils.formatNumber(marketData.getHigh24H(currency));
+        String low24H = currencySymbol +Utils.formatNumber(marketData.getLow24H(currency));
 
         String coinDescription = coinDetails.getDescription();
         Links links = coinDetails.getLinks();
 
-        tvCoinName.setText(coinName + " (" + coinSymbol.toUpperCase() + ")");
+
+        if (marketData.getChangePercentage24H() > 0) {
+            tvChangePercent24H.setTextColor(mContext.getResources().getColor(R.color.colorGreen));
+            changePercent24H = Contract.UP_ARROWHEAD + df.format(marketData.getChangePercentage24H()) + "%";
+        } else {
+            tvChangePercent24H.setTextColor(mContext.getResources().getColor(R.color.colorRed));
+            changePercent24H = Contract.DOWN_ARROWHEAD + df.format(marketData.getChangePercentage24H()) + "%";
+        }
+
+        getSupportActionBar().setTitle(coinFullName);
+        tvCoinName.setText(coinFullName);
         tvCoinRank.setText(rank);
         tvCoinCurrentPrice.setText(currencySymbol + currentPrice);
         tvCoinMarketCap.setText(marketCap);
         tvChangePercent24H.setText(changePercent24H);
         tvLow24H.setText(low24H);
         tvHigh24H.setText(high24H);
+
+
 
         // Fragments
         Bundle bundleChart = new Bundle();

@@ -17,6 +17,7 @@ import com.digicular.coinwatch.activities.CoinDetailActivity;
 import com.digicular.coinwatch.activities.PickCryptoActivity;
 import com.digicular.coinwatch.activities.PriceAlertListActivity;
 import com.digicular.coinwatch.model.CoinInfo;
+import com.digicular.coinwatch.utils.Contract;
 import com.digicular.coinwatch.utils.Utils;
 import com.squareup.picasso.Picasso;
 
@@ -31,8 +32,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.Coin
     Context mContext;
     ArrayList<CoinInfo> listCoinInfo;
     String currencySymbol = "$";
-    String upArrowHead = "\u25B2";
-    String downArrowHead = "\u25BC";
+
 
     public CoinsListAdapter(Context context, ArrayList<CoinInfo> coinsInfoList){
         mContext = context;
@@ -94,18 +94,18 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.Coin
 
         final String coinId = coin.getId();
         String coinLogoUrl = coin.getImage();
-        String coinName = Utils.capitalizeWord(coin.getName());
+        String coinName = Utils.capitalizeWord(coinId);
         String coinSymbol = coin.getSymbol().toUpperCase();
         String currentPrice = currencySymbol + df.format(coin.getCurrentPrice());
         String change24HPercent;
 
         if(coin.getPriceChangePercentage24h() > 0){
             coinViewHolder.tv_24HrChangePercent.setTextColor(mContext.getResources().getColor(R.color.colorGreen));
-            change24HPercent = upArrowHead + df.format(coin.getPriceChangePercentage24h()) + "%";
+            change24HPercent = Contract.UP_ARROWHEAD + df.format(coin.getPriceChangePercentage24h()) + "%";
         }
         else {
             coinViewHolder.tv_24HrChangePercent.setTextColor(mContext.getResources().getColor(R.color.colorRed));
-            change24HPercent = downArrowHead + df.format(coin.getPriceChangePercentage24h()) + "%";
+            change24HPercent = Contract.DOWN_ARROWHEAD + df.format(coin.getPriceChangePercentage24h()) + "%";
         }
 
         coinViewHolder.tv_CoinName.setText(coinName);

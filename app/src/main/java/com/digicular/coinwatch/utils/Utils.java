@@ -2,12 +2,20 @@ package com.digicular.coinwatch.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Spinner;
+
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import com.digicular.coinwatch.model.Condition;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 import okhttp3.Cache;
 import okhttp3.Headers;
@@ -121,4 +129,75 @@ public class Utils {
         Intent intent = new Intent(context, activityClass);
         context.startActivity(intent);
     }
+
+    // Checks for existing Work Request
+    public static boolean isWorkerRunning(String tag){
+        List<WorkInfo> status = null;
+        try {
+            status = WorkManager.getInstance().getWorkInfosByTag(tag).get();
+            boolean running = false;
+            for (WorkInfo workStatus : status) {
+                if (workStatus.getState() == WorkInfo.State.RUNNING
+                        || workStatus.getState() == WorkInfo.State.ENQUEUED) {
+                    return true;
+                }
+            }
+            return false;
+
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Large number formatter
+    public static String formatNumber(double number){
+        String formattedNumber = "";
+        DecimalFormat df = new DecimalFormat("###,###.##");
+
+
+        long thousand = 1000;
+        long tenThousand = 10000;
+        long twentyThousand = 20000;
+        long million = 1000000;
+        long billion = 1000000000;
+        if(number < thousand){
+            formattedNumber =  df.format(number);
+        }
+        else if(number > thousand && number < twentyThousand){
+            df = new DecimalFormat("###,###");
+            formattedNumber =  df.format(number);
+        }
+        else if(number > twentyThousand && number < million){
+            number = number/thousand;
+            formattedNumber =  df.format(number) + "K";
+        }
+
+        else if(number > million && number < billion){
+            number = number/million;
+            formattedNumber =  df.format(number) + "M";
+        }
+
+        else if(number > billion){
+            number = number/billion;
+            formattedNumber =  df.format(number) + "B";
+        }
+        return formattedNumber;
+    }
+
+    public static String formatNumber(BigInteger number){
+        long million = 1000000;
+        long billion = 1000000000;
+        String res = "";
+        if ((number.compareTo(BigInteger.valueOf(million)) == 1)
+                && (number.compareTo(BigInteger.valueOf(billion)) == -1)){
+
+            res = number.divide(BigInteger.valueOf(million)).toString() + "M";
+        }
+        else if (number.compareTo(BigInteger.valueOf(billion)) == 1){
+            res = number.divide(BigInteger.valueOf(billion)).toString() + "B";
+        }
+        return res;
+    }
+
 }

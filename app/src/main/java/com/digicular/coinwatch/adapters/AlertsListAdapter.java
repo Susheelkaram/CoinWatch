@@ -18,7 +18,11 @@ import com.digicular.coinwatch.activities.AddAlertActivity;
 import com.digicular.coinwatch.database.PriceAlert;
 import com.digicular.coinwatch.database.PriceAlertRepository;
 import com.digicular.coinwatch.utils.Contract;
+import com.digicular.coinwatch.utils.Utils;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.xml.transform.dom.DOMLocator;
@@ -33,13 +37,13 @@ import butterknife.ButterKnife;
 public class AlertsListAdapter extends RecyclerView.Adapter<AlertsListAdapter.AlertViewHolder> {
 
     private Context mContext;
-    private List<PriceAlert> mPriceAlertList;
+    private List<PriceAlert> mPriceAlertList = Collections.emptyList();
     private PriceAlertRepository mPriceAlertRepository;
     private View itemView;
 
-    public AlertsListAdapter(Context context, List<PriceAlert> priceAlertList) {
+    public AlertsListAdapter(Context context) {
         mContext = context;
-        mPriceAlertList = priceAlertList;
+//        mPriceAlertList = priceAlertList;
         mPriceAlertRepository = new PriceAlertRepository(mContext);
     }
 
@@ -61,20 +65,28 @@ public class AlertsListAdapter extends RecyclerView.Adapter<AlertsListAdapter.Al
             public void onClick(View v) {
                 Intent i = new Intent(mContext, AddAlertActivity.class);
                 i.putExtra(Contract.ALERT_EXTRA, mAlert);
+                i.putExtra(Contract.EXTRAS_TAG, Contract.EXTRA_TAG_EDITALERT);
                 mContext.startActivity(i);
             }
         });
 
-        String coinId = mAlert.getCoinId();
+        String coinId = Utils.capitalizeWord(mAlert.getCoinId());
+        String coinSymbol = "(" + mAlert.getCoinSymbol() + ")";
         String condition = mAlert.getCondition();
-        Double targetValue = mAlert.getTargetValue();
+        String targetValue = Double.toString(mAlert.getTargetValue());
         boolean isRepeatEnabled = mAlert.isRepeatEnabled();
         boolean isEnabled = mAlert.isEnabled();
 
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM yy");
+        String dateCreated = "Created on " + sdf.format(mAlert.getTimeStamp());
+
         holder.textAlertCoinId.setText(coinId);
-        holder.textAlertCondition.setText(condition + " " + targetValue);
+        holder.textAlertCoinIdSymbol.setText(coinSymbol);
+        holder.textAlertCondition.setText(condition);
+        holder.textTargetValue.setText(targetValue);
         holder.textAlertRepeat.setText(isRepeatEnabled ? "Every time" : "Only once");
         holder.switchIsAlertEnabled.setChecked(isEnabled);
+        holder.textDateCreated.setText(dateCreated);
 
         // Turning Alert ON/OFF
         holder.switchIsAlertEnabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -88,8 +100,11 @@ public class AlertsListAdapter extends RecyclerView.Adapter<AlertsListAdapter.Al
 
     public class AlertViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.text_AlertsCoinName) TextView textAlertCoinId;
+        @BindView(R.id.text_AlertsCoinSymbol) TextView textAlertCoinIdSymbol;
         @BindView(R.id.text_AlertsCondition) TextView textAlertCondition;
         @BindView(R.id.text_AlertsRepeat) TextView textAlertRepeat;
+        @BindView(R.id.text_DateCreated) TextView textDateCreated;
+        @BindView(R.id.text_TargetValue) TextView textTargetValue;
         @BindView(R.id.switch_IsAlertEnabled) SwitchCompat switchIsAlertEnabled;
 
         public AlertViewHolder(@NonNull View itemView) {
@@ -103,6 +118,10 @@ public class AlertsListAdapter extends RecyclerView.Adapter<AlertsListAdapter.Al
         return mPriceAlertList.size();
     }
 
+    public void updateData(List<PriceAlert> alerts){
+        mPriceAlertList = alerts;
+        notifyDataSetChanged();
+    }
 
     public void turnAlertOnOff(PriceAlert priceAlert, boolean isOn){
         priceAlert.setEnabled(isOn);
