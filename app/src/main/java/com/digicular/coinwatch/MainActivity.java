@@ -121,10 +121,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Getting Instances of all fragments for Bottom Navigation
-        HomeFragment homeFragment = new HomeFragment(this);
-        AlertsListFragment alertsFragment = new AlertsListFragment(this);
-        PortfolioDetailFragment portfolioDetailFragment = new PortfolioDetailFragment(this);
-        SettingsFragment settingsFragment = new SettingsFragment(this);
+        HomeFragment homeFragment = new HomeFragment();
+        AlertsListFragment alertsFragment = new AlertsListFragment();
+        PortfolioDetailFragment portfolioDetailFragment = new PortfolioDetailFragment();
+        SettingsFragment settingsFragment = new SettingsFragment();
 
         loadFragment(homeFragment);
 

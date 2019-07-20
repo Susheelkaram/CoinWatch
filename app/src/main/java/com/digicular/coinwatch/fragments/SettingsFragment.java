@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -17,10 +18,11 @@ public class SettingsFragment extends Fragment {
 
     private Context mContext;
 
-    public SettingsFragment(Context context) {
-        mContext = context;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mContext = getContext();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -76,7 +76,7 @@ public class PriceAlertListActivity extends AppCompatActivity {
 
 
 
-        AlertsListFragment alertsListFragment = new AlertsListFragment(this);
+        AlertsListFragment alertsListFragment = new AlertsListFragment();
 
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()

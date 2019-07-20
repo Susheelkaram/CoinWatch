@@ -24,6 +24,9 @@ public interface PriceAlertDoa {
     @Query("SELECT * FROM " + tableName)
     public List<PriceAlert> getAll();
 
+    @Query("SELECT * FROM " + tableName + " WHERE " + DBContract.ALERTS_COL_ISENABLED + " = 1")
+    public List<PriceAlert> getEnabledAlerts();
+
     @Query("SELECT * FROM " + tableName + " WHERE " + DBContract.ALERTS_COL_COINID + " LIKE :coinId")
     public List<PriceAlert> getByCoinId(String coinId);
 

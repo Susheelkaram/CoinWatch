@@ -46,6 +46,9 @@ public class PriceAlertRepository {
     public List<PriceAlert> getAllAlerts(){
         return alertsDb.priceAlertDoa().getAll();
     }
+    public List<PriceAlert> getEnabledAlerts(){
+        return alertsDb.priceAlertDoa().getEnabledAlerts();
+    }
 
     public void deleteAlert(PriceAlert priceAlert){
         new AsyncTask<Void, Void, Void>(){

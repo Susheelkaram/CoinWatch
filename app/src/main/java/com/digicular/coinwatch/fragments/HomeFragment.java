@@ -67,15 +67,14 @@ public class HomeFragment extends Fragment {
     protected String CURRENCY;
     protected String COIN_IDS;
 
-    public HomeFragment(Context context) {
-        mContext = context;
-    }
+    // Fragments need Empty, Private constructor,
+    // so not overriding default constructor
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mContext = getContext();
     }
 
     @Override

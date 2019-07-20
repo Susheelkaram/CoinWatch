@@ -144,7 +144,9 @@ public class Utils {
             }
             return false;
 
-        } catch (InterruptedException | ExecutionException e) {
+        }
+
+        catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
         return false;

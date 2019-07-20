@@ -75,7 +75,9 @@ public class PickCryptoActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                cryptoSelectListAdapter.getFilter().filter(newText);
+                if(cryptoSelectListAdapter != null){
+                    cryptoSelectListAdapter.getFilter().filter(newText);
+                }
                 return false;
             }
         });

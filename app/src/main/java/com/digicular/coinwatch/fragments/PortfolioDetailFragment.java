@@ -21,10 +21,11 @@ public class PortfolioDetailFragment extends Fragment {
 
     private Context mContext;
 
-    public PortfolioDetailFragment(Context context) {
-        mContext = context;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mContext = getContext();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -46,10 +46,11 @@ public class AlertsListFragment extends Fragment {
     private Context mContext;
     private AlertsViewModel alertsViewModel;
 
-    public AlertsListFragment(Context context) {
-        mContext = context;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mContext = getContext();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

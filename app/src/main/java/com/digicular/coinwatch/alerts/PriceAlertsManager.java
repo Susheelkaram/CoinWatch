@@ -1,4 +1,4 @@
-package com.digicular.coinwatch.utils;
+package com.digicular.coinwatch.alerts;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -16,6 +16,8 @@ import com.digicular.coinwatch.database.PriceAlertRepository;
 import com.digicular.coinwatch.model.Condition;
 import com.digicular.coinwatch.model.PriceChange;
 import com.digicular.coinwatch.model.SimplePrice;
+import com.digicular.coinwatch.utils.Contract;
+import com.digicular.coinwatch.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +46,7 @@ public class PriceAlertsManager {
     }
 
     public void check() {
-        alertList = alertRepository.getAllAlerts();
+        alertList = alertRepository.getEnabledAlerts();
         if (alertList.size() > 0) {
             String coinIdsToCheck = getCoinListAsString(alertList);
             getPrices(coinIdsToCheck);
