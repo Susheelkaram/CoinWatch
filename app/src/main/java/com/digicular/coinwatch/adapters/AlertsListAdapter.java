@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,17 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.digicular.coinwatch.R;
 import com.digicular.coinwatch.activities.AddAlertActivity;
-import com.digicular.coinwatch.database.PriceAlert;
-import com.digicular.coinwatch.database.PriceAlertRepository;
+import com.digicular.coinwatch.database.AlertsDB.PriceAlert;
+import com.digicular.coinwatch.database.AlertsDB.PriceAlertRepository;
 import com.digicular.coinwatch.utils.Contract;
 import com.digicular.coinwatch.utils.Utils;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import javax.xml.transform.dom.DOMLocator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,7 +73,7 @@ public class AlertsListAdapter extends RecyclerView.Adapter<AlertsListAdapter.Al
         boolean isRepeatEnabled = mAlert.isRepeatEnabled();
         boolean isEnabled = mAlert.isEnabled();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM yy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM d, ''yy");
         String dateCreated = "Created on " + sdf.format(mAlert.getTimeStamp());
 
         holder.textAlertCoinId.setText(coinId);

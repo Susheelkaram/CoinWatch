@@ -5,6 +5,8 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +15,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.digicular.coinwatch.R;
+import com.digicular.coinwatch.activities.AddAlertActivity;
+import com.digicular.coinwatch.activities.AddTransactionActivity;
 import com.digicular.coinwatch.activities.CoinDetailActivity;
 import com.digicular.coinwatch.activities.PickCryptoActivity;
-import com.digicular.coinwatch.activities.PriceAlertListActivity;
 import com.digicular.coinwatch.model.CoinInfo;
 import com.digicular.coinwatch.utils.Contract;
 import com.digicular.coinwatch.utils.Utils;
@@ -30,13 +33,13 @@ import java.util.ArrayList;
  */
 public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.CoinViewHolder> {
     Context mContext;
-    ArrayList<CoinInfo> listCoinInfo;
+    ArrayList<CoinInfo> coinInfoList;
     String currencySymbol = "$";
 
 
-    public CoinsListAdapter(Context context, ArrayList<CoinInfo> coinsInfoList){
+    public CoinsListAdapter(Context context, ArrayList<CoinInfo> coinInfoList){
         mContext = context;
-        listCoinInfo = coinsInfoList;
+        this.coinInfoList = coinInfoList;
     }
 
     public class CoinViewHolder extends RecyclerView.ViewHolder{
@@ -60,19 +63,20 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.Coin
             button_AddAlert = itemView.findViewById(R.id.button_AddAlert);
             button_AddTransaction = itemView.findViewById(R.id.button_AddTransaction);
 
-            // Launching Alerts activity
+            // Launching Alert Editor to add new Alert for that Crypto
             button_AddAlert.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, PriceAlertListActivity.class);
-                    mContext.startActivity(intent);
+                    int position = getLayoutPosition();
+                    launchNewAlertEditor(coinInfoList.get(position));
                 }
             });
 
             button_AddTransaction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, PickCryptoActivity.class);
+                    Intent intent = new Intent(mContext, AddTransactionActivity.class);
+                    intent.putExtra(Contract.PICKER_MODE, Contract.PICKER_MODE_TRANSACTION);
                     mContext.startActivity(intent);
                 }
             });
@@ -88,7 +92,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.Coin
 
     @Override
     public void onBindViewHolder(@NonNull CoinViewHolder coinViewHolder, int position) {
-        CoinInfo coin = listCoinInfo.get(position);
+        CoinInfo coin = coinInfoList.get(position);
 
         DecimalFormat df = new DecimalFormat("###,###.####");
 
@@ -113,6 +117,8 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.Coin
         coinViewHolder.tv_CurrentPrice.setText(currentPrice);
         coinViewHolder.tv_24HrChangePercent.setText(change24HPercent);
 
+
+        // Loading Crypto LOGO IMAGE with Picasa
         Picasso.get().load(coinLogoUrl)
                 .into(coinViewHolder.img_CoinLogo);
 
@@ -120,7 +126,7 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.Coin
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, CoinDetailActivity.class);
-                intent.putExtra("coinId", coinId);
+                intent.putExtra(Contract.COIN_ID, coinId);
                 mContext.startActivity(intent);
             }
         });
@@ -128,8 +134,19 @@ public class CoinsListAdapter extends RecyclerView.Adapter<CoinsListAdapter.Coin
 
     @Override
     public int getItemCount() {
-        return listCoinInfo.size();
+        return coinInfoList.size();
     }
 
+
+    private void launchNewAlertEditor(CoinInfo coin){
+        Bundle coinPickedBundle = new Bundle();
+        coinPickedBundle.putString(Contract.PICKER_DATA_COINID, coin.getId());
+        coinPickedBundle.putString(Contract.PICKER_DATA_COINNAME, coin.getName());
+        coinPickedBundle.putString(Contract.PICKER_DATA_COINSYMBOL, coin.getSymbol());
+        coinPickedBundle.putString(Contract.EXTRAS_TAG, Contract.EXTRA_TAG_NEWALERT);
+        Intent intent = new Intent(mContext, AddAlertActivity.class);
+        intent.putExtras(coinPickedBundle);
+        mContext.startActivity(intent);
+    }
 }
 

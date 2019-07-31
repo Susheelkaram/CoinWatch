@@ -1,13 +1,8 @@
 package com.digicular.coinwatch;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,30 +10,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.work.Constraints;
 import androidx.work.OneTimeWorkRequest;
-import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.digicular.coinwatch.activities.PickCryptoActivity;
 import com.digicular.coinwatch.adapters.CoinsListAdapter;
 import com.digicular.coinwatch.alerts.PriceAlertWorker;
-import com.digicular.coinwatch.controller.CoinApi;
-import com.digicular.coinwatch.database.AlertsViewModel;
-import com.digicular.coinwatch.database.PriceAlert;
 import com.digicular.coinwatch.fragments.AlertsListFragment;
 import com.digicular.coinwatch.fragments.HomeFragment;
 import com.digicular.coinwatch.fragments.PortfolioDetailFragment;
@@ -49,20 +35,12 @@ import com.digicular.coinwatch.utils.InitialSetup;
 import com.digicular.coinwatch.utils.PreferenceManager;
 import com.digicular.coinwatch.utils.Utils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.FileDescriptor;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by Susheel Kumar Karam
@@ -71,6 +49,7 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
     Toolbar appBar;
+    @BindView(R.id.text_ToolbarTitle) TextView textTitle;
     @BindView(R.id.recyclerView_CoinsInfoList)
     RecyclerView rv_CoinsInfoList;
     @BindView(R.id.swipeRefreshLayout_refresh)
@@ -81,9 +60,6 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout layout_EmptyView;
     @BindView(R.id.button_EmptyViewRetry)
     Button btnEmptyViewRetry;
-    @BindView(R.id.fab_add)
-    FloatingActionButton fabAdd;
-
     @BindView(R.id.bottomNavigationView_AppNavigation)
     BottomNavigationView bnvNavigation;
 
@@ -106,19 +82,13 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         appBar = (Toolbar) findViewById(R.id.AppBar);
+        Button searchButton = findViewById(R.id.button_Search);
 
         setSupportActionBar(appBar);
 
         InitialSetup firstLaunchSetup = new InitialSetup(this);
         firstLaunchSetup.start();
 
-        fabAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(mContext, PickCryptoActivity.class);
-                startActivity(i);
-            }
-        });
 
         // Getting Instances of all fragments for Bottom Navigation
         HomeFragment homeFragment = new HomeFragment();
@@ -127,6 +97,15 @@ public class MainActivity extends AppCompatActivity {
         SettingsFragment settingsFragment = new SettingsFragment();
 
         loadFragment(homeFragment);
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, PickCryptoActivity.class);
+                i.putExtra(Contract.PICKER_MODE, Contract.PICKER_MODE_VIEW);
+                startActivity(i);
+            }
+        });
 
         // Bottom Navigation Listener
         BottomNavigationView.OnNavigationItemSelectedListener bottomNavListener =

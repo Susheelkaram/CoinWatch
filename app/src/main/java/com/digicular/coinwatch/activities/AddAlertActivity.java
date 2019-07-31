@@ -3,13 +3,12 @@ package com.digicular.coinwatch.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
-import android.transition.Visibility;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -17,17 +16,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.digicular.coinwatch.R;
-import com.digicular.coinwatch.database.PriceAlertRepository;
-import com.digicular.coinwatch.database.PriceAlert;
+import com.digicular.coinwatch.database.AlertsDB.PriceAlertRepository;
+import com.digicular.coinwatch.database.AlertsDB.PriceAlert;
 import com.digicular.coinwatch.model.Condition;
 import com.digicular.coinwatch.utils.Contract;
 import com.digicular.coinwatch.utils.Utils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class AddAlertActivity extends AppCompatActivity {
     @BindView(R.id.text_AlertCoinId)
@@ -38,8 +37,13 @@ public class AddAlertActivity extends AppCompatActivity {
     Spinner spinner_AlertCondition;
     @BindView(R.id.input_AlertTargetValue)
     EditText input_AlertTargetValue;
+    @BindView(R.id.switch_IsAlertEnabled)
+    SwitchCompat switch_IsAlertEnabled;
     @BindView(R.id.switch_AlertRepeat)
     SwitchCompat switch_AlertRepeat;
+
+    @BindView(R.id.text_AlertCreatedTime)
+    TextView text_AlertCreatedTime;
     @BindView(R.id.button_ConfirmAddAlert)
     Button button_ConfirmAddAlert;
     @BindView(R.id.button_DeleteAlert)
@@ -51,6 +55,7 @@ public class AddAlertActivity extends AppCompatActivity {
 
     private PriceAlertRepository priceAlertRepository;
     private ArrayList<Condition> conditionList = new ArrayList<Condition>();
+    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +83,7 @@ public class AddAlertActivity extends AppCompatActivity {
             public void onClick(View v) {
                 PriceAlert alert = getAlertDataFromViews();
                 priceAlertRepository.insertAlert(alert);
+                Toast.makeText(mContext, R.string.t_AlertAdded, Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -98,6 +104,7 @@ public class AddAlertActivity extends AppCompatActivity {
 
                 text_AlertCoinId.setText(coinId);
                 text_AlertCoinSymbol.setText(coinSymbol);
+                switch_IsAlertEnabled.setChecked(true);
             }
 
 
@@ -109,14 +116,20 @@ public class AddAlertActivity extends AppCompatActivity {
                 PriceAlert alert = extras.getParcelable(Contract.ALERT_EXTRA);
                 button_ConfirmAddAlert.setVisibility(View.GONE);
                 layout_ButtonsEdit.setVisibility(View.VISIBLE);
-                Toast.makeText(this, alert.getCondition(), Toast.LENGTH_SHORT).show();
                 setDataToViews(alert);
 
+                switch_IsAlertEnabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        turnAlertOnOff(alert, isChecked);
+                    }
+                });
 
                 button_DeleteAlert.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         priceAlertRepository.deleteAlert(alert);
+                        Toast.makeText(mContext, R.string.t_AlertDeleted, Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 });
@@ -127,6 +140,7 @@ public class AddAlertActivity extends AppCompatActivity {
                         PriceAlert newAlert = getAlertDataFromViews();
                         newAlert.setId(alert.getId());
                         priceAlertRepository.insertAlert(newAlert);
+                        Toast.makeText(mContext, R.string.t_AlertSaved, Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 });
@@ -143,7 +157,12 @@ public class AddAlertActivity extends AppCompatActivity {
         Condition condition = (Condition) spinner_AlertCondition.getSelectedItem();
         String conditionValue = condition.getCondition();
         double targetValue = Double.parseDouble(input_AlertTargetValue.getText().toString());
-        boolean isRepeatOn = switch_AlertRepeat.isChecked();
+
+        // TODO: Optimise PriceAlertsManager to Support Repeated alerts
+        //  and change below isRepeatOn statement accordingly
+        // boolean isRepeatOn = switch_AlertRepeat.isChecked();
+        boolean isRepeatOn = false;
+
         boolean isEnabled = true;
         Long timeStamp = System.currentTimeMillis();
 
@@ -165,9 +184,19 @@ public class AddAlertActivity extends AppCompatActivity {
         text_AlertCoinSymbol.setText(alert.getCoinSymbol());
         input_AlertTargetValue.setText(Double.toString(alert.getTargetValue()));
         switch_AlertRepeat.setChecked(alert.isRepeatEnabled());
+        switch_IsAlertEnabled.setChecked(alert.isEnabled());
+
+        SimpleDateFormat df = new SimpleDateFormat("MMM d, ''yy 'at' h:mm a");
+        String timeStamp = "Created on " + df.format(alert.getTimeStamp());
+        text_AlertCreatedTime.setText(timeStamp);
 
         String condition = alert.getCondition();
         int index = Utils.getItemIndex(spinner_AlertCondition, condition);
         spinner_AlertCondition.setSelection(index);
+    }
+
+    public void turnAlertOnOff(PriceAlert priceAlert, boolean isOn){
+        priceAlert.setEnabled(isOn);
+        priceAlertRepository.updateAlert(priceAlert);
     }
 }

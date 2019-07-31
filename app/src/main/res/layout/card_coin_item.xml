@@ -44,7 +44,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bitcoin"
-                    android:textSize="16sp" />
+                    android:textSize="15sp"
+                    android:textStyle="normal" />
 
                 <TextView
                     android:id="@+id/textView_CoinSymbol"
@@ -69,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$5,200"
-                android:textSize="16sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textView_24HrChangePercent"
@@ -137,7 +138,8 @@
                 android:paddingStart="4dp"
                 android:paddingEnd="2dp"
                 app:icon="@drawable/ic_add_black_24dp"
-                app:iconTint="@color/colorLightGrey" />
+                app:iconSize="20dp"
+                app:iconTint="@color/colorGrey"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_AddAlert"
@@ -149,7 +151,8 @@
                 android:paddingStart="2dp"
                 android:paddingEnd="0dp"
                 app:icon="@drawable/ic_add_alert_black_24dp"
-                app:iconTint="@color/colorLightGrey" />
+                app:iconSize="20dp"
+                app:iconTint="@color/colorGrey"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

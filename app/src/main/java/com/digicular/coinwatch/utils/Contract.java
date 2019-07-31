@@ -17,13 +17,14 @@ public class Contract {
     public static final String BASE_URL = "https://api.coingecko.com/api/v3/";
     public static final String CURRENCY = "usd";
     public static final String DOLLAR_SYMBOL = "$";
+    public static final String COIN_ID = "coinId";
 
     // Retrofit constants
     public static final long cacheSize = 20 * 1024 * 1024; // 20MB
 
 
     // Fragment: Coin More info
-    public static final String CHART_COINID = "coinId";
+    public static final String CHART_COINID = COIN_ID;
 
     public static final String MOREINFO_FB_BASEURL = "https://facebook.com/";
     public static final String MOREINFO_TWITTER_BASEURL = "https://twitter.com/";
@@ -54,14 +55,15 @@ public class Contract {
     public static final int WORKREQUEST_DELAY_MINS = 2;
 
     // Crypto currency Picker
+    public static final String PICKER_MODE = "picker_mode";
     public static final String PICKER_MODE_ALERT = "picker_add_alert";
     public static final String PICKER_MODE_TRANSACTION = "picker_add_transaction";
-    public static final String PICKER_MODE_WATCH = "picker_add_watchlist";
-    public static final String PICKER_DATA_COINID = "picker_data_coinid";
+    public static final String PICKER_MODE_VIEW = "picker_view";
+    public static final String PICKER_DATA_COINID = COIN_ID;
     public static final String PICKER_DATA_COINNAME = "picker_data_coinname";
     public static final String PICKER_DATA_COINSYMBOL = "picker_data_coinsymbol";
 
-    // Extras/ Bundle tags
+    // Extras / Bundle tags
     public static final String EXTRAS_TAG = "extras_tag";
     public static final String EXTRA_TAG_EDITALERT = "extra_editalert";
     public static final String EXTRA_TAG_NEWALERT = "extra_newalert";

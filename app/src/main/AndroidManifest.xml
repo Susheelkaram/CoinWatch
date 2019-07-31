@@ -12,14 +12,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.PickCryptoActivity"></activity>
+        <activity android:name=".activities.AddTransactionActivity"
+            android:label="New Transaction"></activity>
+        <activity android:name=".activities.PickCryptoActivity" />
         <activity android:name=".activities.AddAlertActivity" />
         <activity android:name=".activities.PriceAlertListActivity" />
-        <activity android:name=".activities.CoinDetailActivity"/>
+        <activity
+            android:name=".activities.CoinDetailActivity"
+            android:label="Crypto Details" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.PortfolioDetailsActivity" />
         <activity android:name=".activities.PortfolioListActivity" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

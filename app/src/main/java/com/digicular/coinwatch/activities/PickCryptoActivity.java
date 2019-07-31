@@ -39,6 +39,7 @@ public class PickCryptoActivity extends AppCompatActivity {
     private ArrayList<CryptoCurrency> availableCryptoList;
     private Context mContext = this;
     private CryptoSelectListAdapter cryptoSelectListAdapter;
+    private String mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,12 @@ public class PickCryptoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pick_crypto);
 
         ButterKnife.bind(this);
+
+        if(getIntent() != null) {
+            mode = getIntent().getStringExtra(Contract.PICKER_MODE);
+        }
+
+//        Log.d("PICKERMODE", mode);
 
         // Refreshes list of available Crypto currencies
         btnRefreshCryptoList.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +111,7 @@ public class PickCryptoActivity extends AppCompatActivity {
                 else {
                     availableCryptoList = response.body();
                     Log.d("JSON response", response.headers().toString());
-                    cryptoSelectListAdapter = new CryptoSelectListAdapter(mContext, availableCryptoList);
+                    cryptoSelectListAdapter = new CryptoSelectListAdapter(mContext, mode, availableCryptoList);
                     rvCryptoList.setAdapter(cryptoSelectListAdapter);
                 }
             }

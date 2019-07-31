@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.digicular.coinwatch.MainActivity;
@@ -64,8 +65,9 @@ public class HomeFragment extends Fragment {
 
     private PreferenceManager preferenceManager;
 
-    protected String CURRENCY;
-    protected String COIN_IDS;
+    private String fragmentTitle = "Coin Watch";
+    private String CURRENCY;
+    private String COIN_IDS;
 
     // Fragments need Empty, Private constructor,
     // so not overriding default constructor
@@ -75,6 +77,13 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getContext();
+
+        // Setting title for Toolbar
+        TextView titleView  = (TextView) getActivity().findViewById(R.id.text_ToolbarTitle);
+        if(titleView != null){
+            titleView.setText(fragmentTitle);
+        }
+
     }
 
     @Override

@@ -1,16 +1,12 @@
-package com.digicular.coinwatch.database;
+package com.digicular.coinwatch.database.AlertsDB;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.room.Room;
 
-import com.digicular.coinwatch.database.PriceAlert;
-import com.digicular.coinwatch.database.PriceAlertDatabase;
+import com.digicular.coinwatch.database.DBContract;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

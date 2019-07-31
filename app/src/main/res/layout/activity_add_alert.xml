@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp"
-    android:background="@color/colorWhite">
+    android:background="@color/colorWhite"
+    android:padding="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,52 +16,55 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginBottom="20dp"
             android:gravity="center_vertical"
-            android:layout_marginBottom="20dp">
+            android:orientation="horizontal">
+
             <TextView
+                style="@style/myBigText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/myBigText"
                 android:layout_marginEnd="10dp"
-                android:text="When"/>
+                android:text="When" />
+
             <TextView
                 android:id="@+id/text_AlertCoinId"
+                style="@style/myBigBoldText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/myBigBoldText"
                 android:layout_marginEnd="10dp"
-                android:text="Bitcoin"/>
+                android:text="Bitcoin" />
 
             <TextView
                 android:id="@+id/text_AlertCoinSymbol"
+                style="@style/myBigText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/myBigText"
                 android:layout_marginEnd="10dp"
                 android:text="BTC"
-                android:textAllCaps="true"/>
+                android:textAllCaps="true" />
+
             <TextView
+                style="@style/myBigText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/myBigText"
                 android:layout_marginEnd="10dp"
-                android:text="is"/>
+                android:text="is" />
 
         </LinearLayout>
 
 
         <!--<com.google.android.material.textfield.TextInputLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content">-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
-            <!--<EditText-->
-                <!--android:id="@+id/input_AlertCoinId"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_marginBottom="40dp"-->
-                <!--android:hint="Crypto name"-->
-                <!--android:textSize="20sp" />-->
+        <!--<EditText-->
+        <!--android:id="@+id/input_AlertCoinId"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginBottom="40dp"-->
+        <!--android:hint="Crypto name"-->
+        <!--android:textSize="20sp" />-->
         <!--</com.google.android.material.textfield.TextInputLayout>-->
 
         <LinearLayout
@@ -112,6 +115,16 @@
             android:layout_marginBottom="40dp"
             android:padding="5dp"
             android:text="Alert Me Everytime"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_IsAlertEnabled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:padding="5dp"
+            android:text="Turn On Alert"
             android:textSize="20sp" />
 
 
@@ -121,21 +134,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/text_AlertCreatedTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            style="@style/myTinyText"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_ConfirmAddAlert"
             style="@style/myMaterialButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:text="Add Alert" />
 
         <LinearLayout
             android:id="@+id/ll_ButtonsEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:visibility="gone">
 
             <com.google.android.material.button.MaterialButton

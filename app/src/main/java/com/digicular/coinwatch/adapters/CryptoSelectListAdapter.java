@@ -1,5 +1,6 @@
 package com.digicular.coinwatch.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.digicular.coinwatch.R;
 import com.digicular.coinwatch.activities.AddAlertActivity;
+import com.digicular.coinwatch.activities.CoinDetailActivity;
 import com.digicular.coinwatch.model.CryptoCurrency;
 import com.digicular.coinwatch.utils.Contract;
 import com.digicular.coinwatch.utils.Utils;
@@ -32,14 +34,15 @@ import butterknife.ButterKnife;
  */
 public class CryptoSelectListAdapter extends RecyclerView.Adapter<CryptoSelectListAdapter.CryptoViewHolder>
         implements Filterable {
-
+    private String mode;
     private Context mContext;
     private ArrayList<CryptoCurrency> mAvailableCryptoList;
     private ArrayList<CryptoCurrency> mFullAvailableCryptoList;
 
 
-    public CryptoSelectListAdapter(Context context, ArrayList<CryptoCurrency> availableCryptoList) {
+    public CryptoSelectListAdapter(Context context, String pickerMode, ArrayList<CryptoCurrency> availableCryptoList) {
         mContext = context;
+        mode = pickerMode;
         mAvailableCryptoList = availableCryptoList;
         mFullAvailableCryptoList = new ArrayList<CryptoCurrency>(availableCryptoList);
         Log.d("JSON response", String.valueOf(mAvailableCryptoList.size()));
@@ -60,10 +63,8 @@ public class CryptoSelectListAdapter extends RecyclerView.Adapter<CryptoSelectLi
         holder.textCoinName.setText(coinName);
         holder.textCoinSymbol.setText(currency.getSymbol());
 
-//        CryptoCurrency currency = mAvailableCryptoList.get(getAdapterPosition());
 
         Bundle coinPickedBundle = new Bundle();
-        coinPickedBundle.putString(Contract.EXTRAS_TAG, Contract.EXTRA_TAG_NEWALERT);
         coinPickedBundle.putString(Contract.PICKER_DATA_COINID, currency.getId());
         coinPickedBundle.putString(Contract.PICKER_DATA_COINNAME, currency.getName());
         coinPickedBundle.putString(Contract.PICKER_DATA_COINSYMBOL, currency.getSymbol());
@@ -71,12 +72,22 @@ public class CryptoSelectListAdapter extends RecyclerView.Adapter<CryptoSelectLi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, AddAlertActivity.class);
-                intent.putExtras(coinPickedBundle);
-                mContext.startActivity(intent);
+                switch (mode){
+                    case Contract.PICKER_MODE_ALERT:
+                        launchNewAlertEditor(coinPickedBundle);
+                        ((Activity) mContext).finish();
+                        break;
+                    case Contract.PICKER_MODE_VIEW:
+                        launchDetailedCoinInfo(currency.getId());
+                        ((Activity) mContext).finish();
+                        break;
+                }
+
             }
         });
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -161,4 +172,25 @@ public class CryptoSelectListAdapter extends RecyclerView.Adapter<CryptoSelectLi
             notifyDataSetChanged();
         }
     };
+
+
+    // Helper Methods
+    private void launchNewAlertEditor(Bundle coinPickedBundle){
+        Intent i = new Intent(mContext, AddAlertActivity.class);
+        coinPickedBundle.putString(Contract.EXTRAS_TAG, Contract.EXTRA_TAG_NEWALERT);
+        i.putExtras(coinPickedBundle);
+        mContext.startActivity(i);
+    }
+    private void launchDetailedCoinInfo(String coinId) {
+        Intent i = new Intent(mContext, CoinDetailActivity.class);
+        i.putExtra(Contract.COIN_ID, coinId);
+        mContext.startActivity(i);
+    }
+
+
+    private void launchAddTransactionActivity(Bundle coinPickedBundle) {
+        Intent i = new Intent(mContext, AddAlertActivity.class);
+        i.putExtras(coinPickedBundle);
+        mContext.startActivity(i);
+    }
 }

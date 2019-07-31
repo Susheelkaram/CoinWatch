@@ -5,6 +5,7 @@ import android.util.Log;
 
 
 import androidx.annotation.NonNull;
+import androidx.work.ExistingWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.Worker;
@@ -46,7 +47,7 @@ public class PriceAlertWorker extends Worker {
                 .addTag(Contract.WORKREQUEST_TAG)
                 .build();
 
-        workManager.enqueue(oneTimeWorkRequest);
+        workManager.enqueueUniqueWork(Contract.WORKREQUEST_TAG, ExistingWorkPolicy.REPLACE, oneTimeWorkRequest);
 
         return Result.success();
     }

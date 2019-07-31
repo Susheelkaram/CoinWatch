@@ -1,4 +1,4 @@
-package com.digicular.coinwatch.database;
+package com.digicular.coinwatch.database.AlertsDB;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -8,7 +8,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.io.Serializable;
+import com.digicular.coinwatch.database.DBContract;
 
 /**
  * Created by Susheel Kumar Karam
@@ -40,7 +40,7 @@ public class PriceAlert implements Parcelable {
     private boolean isEnabled;
 
     @ColumnInfo(name = DBContract.ALERTS_COL_TIMEMILLIS)
-    //Epoch time in Milli seconds
+    //Epoch time in Milli seconds (10 Digit)
     private Long timeStamp;
 
 

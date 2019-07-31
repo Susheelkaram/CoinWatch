@@ -11,9 +11,8 @@ import androidx.core.app.NotificationCompat;
 
 import com.digicular.coinwatch.R;
 import com.digicular.coinwatch.controller.CoinApi;
-import com.digicular.coinwatch.database.PriceAlert;
-import com.digicular.coinwatch.database.PriceAlertRepository;
-import com.digicular.coinwatch.model.Condition;
+import com.digicular.coinwatch.database.AlertsDB.PriceAlert;
+import com.digicular.coinwatch.database.AlertsDB.PriceAlertRepository;
 import com.digicular.coinwatch.model.PriceChange;
 import com.digicular.coinwatch.model.SimplePrice;
 import com.digicular.coinwatch.utils.Contract;
@@ -105,15 +104,15 @@ public class PriceAlertsManager {
             // Less than condition (DROP condition)
             if (condition.equals(Contract.ALERT_VALLOWER)) {
                 if (currentPrice <= targetValue) {
-                    priceChangeList.add(
-                            new PriceChange(targetValue, currentPrice, coinId, coinSymbol)
-                    );
+                    priceChangeList.add(new PriceChange(targetValue, currentPrice, coinId, coinSymbol));
+                    turnAlertOff(alert, false);
                 }
             }
             // Greater than condition (RISE condition)
             else if (condition.equals(Contract.ALERT_VALHIGHER)) {
                 if (currentPrice >= targetValue) {
                     priceChangeList.add(new PriceChange(targetValue, currentPrice, coinId, coinSymbol));
+                    turnAlertOff(alert, false);
                 }
             }
         }
@@ -162,5 +161,10 @@ public class PriceAlertsManager {
                 .setSmallIcon(R.mipmap.ic_launcher);
 
         notificationManager.notify(Utils.getRandomNumberInRange(1, 1000), builder.build());
+    }
+
+    public void turnAlertOff(PriceAlert priceAlert, boolean isOn){
+        priceAlert.setEnabled(isOn);
+        alertRepository.updateAlert(priceAlert);
     }
 }

@@ -5,24 +5,48 @@
     android:layout_height="match_parent"
     tools:context=".fragments.AlertsListFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
         android:orientation="vertical"
-        tools:context=".activities.PriceAlertListActivity">
+        tools:context=".activities.PriceAlertListActivity"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_Alerts"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true">
+
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <include
+            android:id="@+id/emptyView_Alerts"
+            layout="@layout/empty_view_alerts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
 
         <com.google.android.material.button.MaterialButton
             style="@style/myMaterialButton"
             android:id="@+id/button_AddAlert"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Alert" />
+            android:text="Add Alert"
+            android:visibility="gone"/>
 
-    </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_add_black_24dp"
+            android:tint="@color/colorWhite" />
+
+    </RelativeLayout>
 </FrameLayout>

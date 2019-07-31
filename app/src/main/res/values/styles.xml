@@ -12,6 +12,21 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <!--Toolbar Style-->
+
+    <style name="ToolBarTheme" parent="Widget.AppCompat.Toolbar">
+        <item name="android:titleTextStyle">@style/ToolBarTheme.TitleTextStyle</item>
+    </style>
+
+    <style name="ToolBarTheme.TitleTextStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <!--Headings Styles-->
     <style name="TextInsignificantStyle">
         <item name="android:color">@color/colorLightGrey</item>
         <item name="android:textSize">12sp</item>
@@ -68,16 +83,28 @@
     </style>
 
     <style name="myMaterialIconButton" parent="Widget.MaterialComponents.Button.TextButton.Icon">
-
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <!--<item name="android:paddingLeft">0dp</item>-->
+        <!--<item name="android:paddingLeft">0dp</item>-->
     </style>
 
     <style name="myMaterialButton" parent="Widget.MaterialComponents.Button">
-
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">30dp</item>
     </style>
 
     <style name="myMaterialOutlineButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
-
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">30dp</item>
     </style>
+
 
     <!--Custom Text / Headings-->
     <style name="myHeading">
@@ -90,20 +117,22 @@
         <item name="android:textColor">@color/colorGrey</item>
     </style>
 
-
+    <style name="myTinyText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/colorGrey</item>
+    </style>
 
     <style name="mySmallerText">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/colorGrey</item>
     </style>
 
-    <style name="myTinyText">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/colorGrey</item>
-    </style>
-
     <style name="myMediumText">
         <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="myMediumBoldText" parent="myMediumText">
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="myBigBoldText">

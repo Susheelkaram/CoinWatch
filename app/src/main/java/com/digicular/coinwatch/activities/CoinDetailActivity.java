@@ -3,6 +3,7 @@ package com.digicular.coinwatch.activities;
 import android.content.Context;
 import android.content.Intent;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.viewpager.widget.ViewPager;
@@ -12,6 +13,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 
+import android.text.TextUtils;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +37,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class CoinDetailActivity extends AppCompatActivity {
+public class CoinDetailActivity extends BaseCompatActivity {
     private Context mContext = this;
     Toolbar appBar;
     TabLayout tabLayoutCoinDetail;
@@ -52,6 +55,7 @@ public class CoinDetailActivity extends AppCompatActivity {
     String currency = "usd";
     String currencySymbol = "$";
     List<Bundle> fragBundles = new ArrayList<Bundle>();
+    Communicator communicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,16 +74,16 @@ public class CoinDetailActivity extends AppCompatActivity {
         tvLow24H = (TextView) findViewById(R.id.textView_24HrLow);
         tvHigh24H = (TextView) findViewById(R.id.textView_24HrHigh);
 
-        setSupportActionBar(appBar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Intent intent = getIntent();
-        coinId = intent.getStringExtra("coinId");
-
+        coinId = intent.getStringExtra(Contract.COIN_ID);
+        Log.d("COINID", coinId);
         getDetailsCoin(coinId);
     }
 
+    public interface Communicator{
+        public void sendTitle(String coinName, String coinSymbol);
+    }
 
     public void getDetailsCoin(final String coinId) {
         Retrofit retrofit = Utils.getRetrofitWithCache(this, Contract.BASE_URL);
@@ -104,6 +108,7 @@ public class CoinDetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<CoinInfoDetailed> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Request Failed", Toast.LENGTH_SHORT).show();
+                Log.d("REQUEST_URL",  call.request().toString());
             }
         });
     }
@@ -115,7 +120,7 @@ public class CoinDetailActivity extends AppCompatActivity {
 
         String coinName = coinDetails.getName();
         String coinSymbol = coinDetails.getSymbol();
-        String coinFullName = coinName + " (" + coinSymbol.toUpperCase() + ")";
+        String coinFullName = Utils.capitalizeWord(coinName) + " (" + coinSymbol.toUpperCase() + ")";
         String currentPrice = Utils.formatNumber(marketData.getCurrentPrice(currency));
         String changePercent24H = Double.toString(marketData.getChangePercentage24H());
         String rank = Integer.toString(coinDetails.getMarketCapRank());
@@ -126,6 +131,8 @@ public class CoinDetailActivity extends AppCompatActivity {
         String coinDescription = coinDetails.getDescription();
         Links links = coinDetails.getLinks();
 
+        // Setting Title for Toolbar
+        getSupportActionBar().setTitle(coinFullName);
 
         if (marketData.getChangePercentage24H() > 0) {
             tvChangePercent24H.setTextColor(mContext.getResources().getColor(R.color.colorGreen));
@@ -135,7 +142,6 @@ public class CoinDetailActivity extends AppCompatActivity {
             changePercent24H = Contract.DOWN_ARROWHEAD + df.format(marketData.getChangePercentage24H()) + "%";
         }
 
-        getSupportActionBar().setTitle(coinFullName);
         tvCoinName.setText(coinFullName);
         tvCoinRank.setText(rank);
         tvCoinCurrentPrice.setText(currencySymbol + currentPrice);

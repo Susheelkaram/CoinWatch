@@ -1,7 +1,5 @@
-package com.digicular.coinwatch.database;
+package com.digicular.coinwatch.database.AlertsDB;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -9,7 +7,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import java.util.ArrayList;
+import com.digicular.coinwatch.database.DBContract;
+
 import java.util.List;
 
 /**
@@ -30,7 +29,7 @@ public interface PriceAlertDoa {
     @Query("SELECT * FROM " + tableName + " WHERE " + DBContract.ALERTS_COL_COINID + " LIKE :coinId")
     public List<PriceAlert> getByCoinId(String coinId);
 
-    @Query("SELECT COUNT(*) FROM " + DBContract.ALERTS_TABLE_NAME)
+    @Query("SELECT COUNT(*) FROM " + tableName)
     public int countUsers();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
