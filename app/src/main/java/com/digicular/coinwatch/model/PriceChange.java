@@ -21,6 +21,7 @@ public class PriceChange {
         this.newPrice = newPrice;
         this.coinId = coinId;
         this.coinSymbol = coinSymbol;
+        this.priceDifference = newPrice - targetPrice;
     }
 
     public double getNewPrice() {
@@ -40,7 +41,7 @@ public class PriceChange {
     public String toString() {
         String changeType = priceDifference < 0 ? "dropped" : "increased";
         String changePreposition = priceDifference < 0 ? "below" : "above";
-        String SPACE = " ";
+        final String SPACE = " ";
 
         // Ex: "Bitcoin (BTC) price dropped below 11000.01 (current price is 11,120)"
         String toStringText = Utils.capitalizeWord(coinId) + " (" + coinSymbol.toUpperCase() + ")"
